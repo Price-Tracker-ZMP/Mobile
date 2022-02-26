@@ -1,13 +1,13 @@
-﻿using System;
-using System.ComponentModel;
+﻿
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PriceTrackerMobile.Views
 {
-    public partial class AboutPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PriceTrackerPage : ContentPage
     {
-        public AboutPage()
+        public PriceTrackerPage()
         {
             InitializeComponent();
         }
