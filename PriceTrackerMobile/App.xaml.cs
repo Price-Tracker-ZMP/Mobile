@@ -1,8 +1,4 @@
-﻿using PriceTrackerMobile.Services;
-using PriceTrackerMobile.Views;
-using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace PriceTrackerMobile
 {
@@ -12,8 +8,6 @@ namespace PriceTrackerMobile
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
