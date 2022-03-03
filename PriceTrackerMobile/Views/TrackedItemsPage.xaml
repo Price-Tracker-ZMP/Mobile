@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
-             x:Class="PriceTrackerMobile.Views.PriceTrackerPage"
-             x:DataType="viewmodels:MainPageViewModel">
+             x:Class="PriceTrackerMobile.Views.TrackedItemsPage"
+             x:DataType="viewmodels:TrackedItemsViewModel">
     <ContentPage.BindingContext>
-        <viewmodels:MainPageViewModel/>
+        <viewmodels:TrackedItemsViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <Grid RowDefinitions="*,Auto">

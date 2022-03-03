@@ -1,20 +1,22 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
+using PriceTrackerMobile.Models;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PriceTrackerMobile.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class TrackedItemsViewModel : ViewModelBase
     {
-        public ObservableRangeCollection<string> items { get; }
+        public ObservableRangeCollection<Item> items { get; }
+        public ObservableRangeCollection<Grouping<string, Item>> itemGroups { get; set; }
 
-        public MainPageViewModel()
+        public TrackedItemsViewModel()
         {
             IncreaseCount = new Command(OnIncrease);
             CallServerCommand = new AsyncCommand(CallServer);
-            items = new ObservableRangeCollection<string>();
-            Title = "Main Page";
+            items = new ObservableRangeCollection<Item>();
+            Title = "Tracked Items";
         }
         public ICommand IncreaseCount { get; }
         public ICommand CallServerCommand { get; }
@@ -33,7 +35,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task CallServer()
         {
-            items.AddRange( new string[] { });
+            items.AddRange( new Item[] { });
         }
     }
 }

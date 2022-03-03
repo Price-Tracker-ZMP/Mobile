@@ -5,10 +5,10 @@ using Xamarin.Forms.Xaml;
 namespace PriceTrackerMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PriceTrackerPage : ContentPage
+    public partial class TrackedItemsPage : ContentPage
     {
 
-        public PriceTrackerPage()
+        public TrackedItemsPage()
         {
             InitializeComponent();
         }
