@@ -11,12 +11,12 @@
     <ListView CachingStrategy="RecycleElement"
               ItemTapped="ListView_ItemTapped"
               BackgroundColor="Transparent"
-              ItemsSource="{Binding Items}"
+              ItemsSource="{Binding TrackedGames}"
               HasUnevenRows="True"
               SeparatorVisibility="None">
 
         <ListView.ItemTemplate>
-            <DataTemplate x:DataType="models:Item">
+            <DataTemplate x:DataType="models:Game">
                 <ViewCell>
                     <ViewCell.ContextActions>
                         <MenuItem Text="Details"/>
