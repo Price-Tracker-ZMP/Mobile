@@ -7,6 +7,7 @@ namespace PriceTrackerMobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PriceTrackerPage : ContentPage
     {
+
         public PriceTrackerPage()
         {
             InitializeComponent();
