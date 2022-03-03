@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
+             x:Class="PriceTrackerMobile.Views.PriceTrackerPage"
+             x:DataType="viewmodels:MainPageViewModel">
+    <ContentPage.BindingContext>
+        <viewmodels:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,Auto">
+            <Label
+                Grid.Row="0"
+                Text="{Binding CountDisplay}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                FontSize="Large"/>
+            <Button Command="{Binding IncreaseCount}" x:Name="ButtonClick" Grid.Row="1" Text="Click me" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
