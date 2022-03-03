@@ -2,20 +2,48 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
+             xmlns:models="clr-namespace:PriceTrackerMobile.Models"
              x:Class="PriceTrackerMobile.Views.TrackedItemsPage"
              x:DataType="viewmodels:TrackedItemsViewModel">
     <ContentPage.BindingContext>
         <viewmodels:TrackedItemsViewModel/>
     </ContentPage.BindingContext>
-    <ContentPage.Content>
-        <Grid RowDefinitions="*,Auto">
-            <Label
-                Grid.Row="0"
-                Text="{Binding CountDisplay}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand"
-                FontSize="Large"/>
-            <Button Command="{Binding IncreaseCount}" x:Name="ButtonClick" Grid.Row="1" Text="Click me" />
-        </Grid>
-    </ContentPage.Content>
+    <ListView CachingStrategy="RecycleElement"
+              ItemTapped="ListView_ItemTapped"
+              BackgroundColor="Transparent"
+              ItemsSource="{Binding Items}"
+              HasUnevenRows="True"
+              SeparatorVisibility="None">
+
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="models:Item">
+                <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Text="Details"/>
+                        <MenuItem Text="Delete" IsDestructive="True" Clicked="StopTracking"/>
+                    </ViewCell.ContextActions>
+                    <Grid Padding="10">
+                        <Frame CornerRadius="20" HasShadow="True">
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding ImageUrl}" WidthRequest="50"/>
+                                <StackLayout VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                               VerticalOptions="Center"
+                               FontSize="Large"/>
+                                    <Label Text="{Binding Id}"
+                               VerticalOptions="Center"
+                               FontSize="Large"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+        <ListView.Footer>
+            <StackLayout BackgroundColor="Cyan">
+                <Button Text="Load more"/>
+            </StackLayout>
+        </ListView.Footer>
+    </ListView>
 </ContentPage>

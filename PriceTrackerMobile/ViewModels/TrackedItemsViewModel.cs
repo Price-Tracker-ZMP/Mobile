@@ -2,40 +2,39 @@
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Models;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace PriceTrackerMobile.ViewModels
 {
     public class TrackedItemsViewModel : ViewModelBase
     {
-        public ObservableRangeCollection<Item> items { get; }
-        public ObservableRangeCollection<Grouping<string, Item>> itemGroups { get; set; }
+        public ObservableRangeCollection<Game> TrackedGames { get; }
+        public AsyncCommand RefreshCommand { get; }
 
         public TrackedItemsViewModel()
         {
-            IncreaseCount = new Command(OnIncrease);
-            CallServerCommand = new AsyncCommand(CallServer);
-            items = new ObservableRangeCollection<Item>();
             Title = "Tracked Items";
-        }
-        public ICommand IncreaseCount { get; }
-        public ICommand CallServerCommand { get; }
-        int clickCount;
-        string countDisplay = "Click me!";
-        public string CountDisplay
-        {
-            get => countDisplay;
-            set => SetProperty(ref countDisplay, value);
+
+            TrackedGames = new ObservableRangeCollection<Game>();
+
+            var image = "https://s3.gaming-cdn.com/images/products/4082/orig/nierautomata-game-of-the-yorha-edition-game-of-the-yorha-edition-pc-game-steam-cover.jpg";
+
+            TrackedGames.Add(new Game() { Name = "Nier Automata", Id = 1, ImageUrl = image });
+            TrackedGames.Add(new Game() { Name = "sabnautica", Id = 2, ImageUrl = image });
+            TrackedGames.Add(new Game() { Name = "Nier Automata", Id = 1, ImageUrl = image });
+            TrackedGames.Add(new Game() { Name = "sabnautica", Id = 2, ImageUrl = image });
+            TrackedGames.Add(new Game() { Name = "Nier Automata", Id = 1, ImageUrl = image });
+            TrackedGames.Add(new Game() { Name = "sabnautica", Id = 2, ImageUrl = image });
+            TrackedGames.Add(new Game() { Name = "Nier Automata", Id = 1, ImageUrl = image });
+            TrackedGames.Add(new Game() { Name = "sabnautica", Id = 2, ImageUrl = image });
+
+            RefreshCommand = new AsyncCommand(Refresh);
         }
 
-        void OnIncrease()
+        async Task Refresh()
         {
-            CountDisplay = $"You clicked {++clickCount} time(s)";
-        }
-
-        async Task CallServer()
-        {
-            items.AddRange( new Item[] { });
+            IsBusy = true;
+            await Task.Delay(2000);
+            IsBusy = false;
         }
     }
 }
