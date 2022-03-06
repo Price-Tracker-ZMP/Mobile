@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\TrackedItemsPage.xaml.cs">
       <DependentUpon>TrackedItemsPage.xaml</DependentUpon>
     </Compile>

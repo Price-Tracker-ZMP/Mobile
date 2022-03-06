@@ -1,6 +1,8 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Models;
+using PriceTrackerMobile.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PriceTrackerMobile.ViewModels
@@ -16,14 +18,8 @@ namespace PriceTrackerMobile.ViewModels
 
         public TrackedItemsViewModel()
         {
-
             Title = "Coffee Equipment";
-
-            Games = new ObservableRangeCollection<Game>
-            {
-                new Game() { Id = 1, Name = "Nier", ImageUrl = "https://image.ceneostatic.pl/data/products/49127782/i-nier-automata-gra-ps4.jpg" },
-                new Game() { Id = 2, Name = "Sabnautica", ImageUrl = "https://s2.gaming-cdn.com/images/products/1003/orig/game-steam-subnautica-cover.jpg" }
-            };
+            Games = new ObservableRangeCollection<Game>();
 
             RefreshCommand = new AsyncCommand(Refresh);
             DeleteCommand = new AsyncCommand<Game>(Delete);
@@ -34,15 +30,17 @@ namespace PriceTrackerMobile.ViewModels
             if (game == null)
                 return;
 
-            Games.Remove(game); ;
-
+            await PriceTrackerApiService.DeleteGame(game);
+            await Refresh();
         }
 
         async Task Refresh()
         {
             IsBusy = true;
 
-            await Task.Delay(2000);
+            var newGames = await PriceTrackerApiService.GetGames();
+            Games.Clear();
+            Games.AddRange(newGames);
 
             IsBusy = false;
         }
