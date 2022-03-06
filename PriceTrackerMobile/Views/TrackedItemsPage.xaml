@@ -1,49 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
-             xmlns:models="clr-namespace:PriceTrackerMobile.Models"
-             x:Class="PriceTrackerMobile.Views.TrackedItemsPage"
-             x:DataType="viewmodels:TrackedItemsViewModel">
+<ContentPage
+    x:Class="PriceTrackerMobile.Views.TrackedItemsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mvvm="clr-namespace:MvvmHelpers;assembly=MvvmHelpers"
+    xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
+    xmlns:model="clr-namespace:PriceTrackerMobile.Models"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core" x:DataType="viewmodels:TrackedItemsViewModel"
+    x:Name="CoffeePage"
+    BackgroundColor="White">
     <ContentPage.BindingContext>
-        <viewmodels:TrackedItemsViewModel/>
+        <viewmodels:TrackedItemsViewModel />
     </ContentPage.BindingContext>
-    <ListView CachingStrategy="RecycleElement"
-              ItemTapped="ListView_ItemTapped"
-              BackgroundColor="Transparent"
-              ItemsSource="{Binding TrackedGames}"
-              HasUnevenRows="True"
-              SeparatorVisibility="None">
+    <RefreshView
+        Command="{Binding RefreshCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+        RefreshColor="Red">
 
-        <ListView.ItemTemplate>
-            <DataTemplate x:DataType="models:Game">
-                <ViewCell>
-                    <ViewCell.ContextActions>
-                        <MenuItem Text="Details"/>
-                        <MenuItem Text="Delete" IsDestructive="True" Clicked="StopTracking"/>
-                    </ViewCell.ContextActions>
-                    <Grid Padding="10">
-                        <Frame CornerRadius="20" HasShadow="True">
-                            <StackLayout Orientation="Horizontal">
-                                <Image Source="{Binding ImageUrl}" WidthRequest="50"/>
-                                <StackLayout VerticalOptions="Center">
-                                    <Label Text="{Binding Name}"
-                               VerticalOptions="Center"
-                               FontSize="Large"/>
-                                    <Label Text="{Binding Id}"
-                               VerticalOptions="Center"
-                               FontSize="Large"/>
+        <CollectionView
+            BackgroundColor="Transparent"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsLayout="VerticalList"
+            ItemsSource="{Binding Games}"
+            SelectionMode="Single">
+            <CollectionView.EmptyView>
+                <StackLayout Padding="12">
+                    <Label HorizontalOptions="Center" Text="No coffee" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView android:SwipeView.SwipeTransitionMode="Drag">
+                        <SwipeView.RightItems>
+                            <SwipeItems x:DataType="model:Game">
+                                <SwipeItem
+                                    BackgroundColor="Orange"
+                                    Text="Details" />
+                                <SwipeItem
+                                    IsDestructive="True"
+                                    Text="Delete"
+                                    BackgroundColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TrackedItemsViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid Padding="10" x:DataType="model:Game">
+                            <Frame CornerRadius="20" HasShadow="True">
+                                <StackLayout Orientation="Horizontal">
+                                    <Image Source="{Binding ImageUrl}" WidthRequest="66" />
+                                    <StackLayout VerticalOptions="Center">
+                                        <Label
+                                            FontSize="Large"
+                                            Text="{Binding Name}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            FontSize="Large"
+                                            Text="{Binding Id}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
-                        </Frame>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-        <ListView.Footer>
-            <StackLayout BackgroundColor="Cyan">
-                <Button Text="Load more"/>
-            </StackLayout>
-        </ListView.Footer>
-    </ListView>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
 </ContentPage>
