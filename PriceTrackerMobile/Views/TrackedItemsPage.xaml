@@ -6,7 +6,8 @@
     xmlns:mvvm="clr-namespace:MvvmHelpers;assembly=MvvmHelpers"
     xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
     xmlns:model="clr-namespace:PriceTrackerMobile.Models"
-    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core" x:DataType="viewmodels:TrackedItemsViewModel"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    x:DataType="viewmodels:TrackedItemsViewModel"
     x:Name="CoffeePage"
     BackgroundColor="White">
     <ContentPage.BindingContext>

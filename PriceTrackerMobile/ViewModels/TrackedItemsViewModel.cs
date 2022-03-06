@@ -13,17 +13,15 @@ namespace PriceTrackerMobile.ViewModels
         public ObservableRangeCollection<Game> Games { get; set; }
 
         public AsyncCommand RefreshCommand { get; }
-
         public AsyncCommand<Game> DeleteCommand { get; }
-        public AsyncCommand<object> SelectedCommand { get; }
         public AsyncCommand AddCommand { get; }
 
         public TrackedItemsViewModel()
         {
-            Title = "Coffee Equipment";
+            Title = "Tracked Games";
             Games = new ObservableRangeCollection<Game>();
 
-            RefreshCommand = new AsyncCommand(Refresh);
+            RefreshCommand = new AsyncCommand(RefreshPage);
             DeleteCommand = new AsyncCommand<Game>(Delete);
             AddCommand = new AsyncCommand(GoToAddPage);
         }
@@ -34,10 +32,10 @@ namespace PriceTrackerMobile.ViewModels
                 return;
 
             await PriceTrackerApiService.DeleteGame(game);
-            await Refresh();
+            await RefreshPage();
         }
 
-        async Task Refresh()
+        async Task RefreshPage()
         {
             IsBusy = true;
 
