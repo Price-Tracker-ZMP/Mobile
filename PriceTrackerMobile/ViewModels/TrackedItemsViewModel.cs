@@ -2,8 +2,9 @@
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Services;
-using System.Collections.Generic;
+using PriceTrackerMobile.Views;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace PriceTrackerMobile.ViewModels
 {
@@ -12,17 +13,19 @@ namespace PriceTrackerMobile.ViewModels
         public ObservableRangeCollection<Game> Games { get; set; }
 
         public AsyncCommand RefreshCommand { get; }
-
         public AsyncCommand<Game> DeleteCommand { get; }
-        public AsyncCommand<object> SelectedCommand { get; }
+        public AsyncCommand AddCommand { get; }
 
         public TrackedItemsViewModel()
         {
-            Title = "Coffee Equipment";
+            Title = "Tracked Games";
             Games = new ObservableRangeCollection<Game>();
 
-            RefreshCommand = new AsyncCommand(Refresh);
+            RefreshCommand = new AsyncCommand(RefreshPage);
             DeleteCommand = new AsyncCommand<Game>(Delete);
+            AddCommand = new AsyncCommand(GoToAddPage);
+
+            RefreshPage();
         }
 
         async Task Delete(Game game)
@@ -31,10 +34,10 @@ namespace PriceTrackerMobile.ViewModels
                 return;
 
             await PriceTrackerApiService.DeleteGame(game);
-            await Refresh();
+            await RefreshPage();
         }
 
-        async Task Refresh()
+        async Task RefreshPage()
         {
             IsBusy = true;
 
@@ -43,6 +46,12 @@ namespace PriceTrackerMobile.ViewModels
             Games.AddRange(newGames);
 
             IsBusy = false;
+        }
+
+        async Task GoToAddPage()
+        {
+            string route = $"{nameof(AddItemPage)}";
+            await Shell.Current.GoToAsync(route);
         }
     }
 }
