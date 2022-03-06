@@ -17,4 +17,10 @@
       <DependentUpon>TrackedItemsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\AddItemPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

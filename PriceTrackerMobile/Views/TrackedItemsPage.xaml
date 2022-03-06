@@ -12,6 +12,11 @@
     <ContentPage.BindingContext>
         <viewmodels:TrackedItemsViewModel />
     </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddCommand}"/>
+    </ContentPage.ToolbarItems>
+    
     <RefreshView
         Command="{Binding RefreshCommand}"
         IsRefreshing="{Binding IsBusy, Mode=OneWay}"
@@ -54,7 +59,7 @@
                                             Text="{Binding Name}"
                                             VerticalOptions="Center" />
                                         <Label
-                                            FontSize="Large"
+                                            FontSize="Small"
                                             Text="{Binding Id}"
                                             VerticalOptions="Center" />
                                     </StackLayout>
