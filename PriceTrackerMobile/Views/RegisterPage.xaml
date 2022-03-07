@@ -12,6 +12,18 @@
             <Label Text="Welcome to register page!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Entry 
+                Text="{Binding Email}"
+                Placeholder="Email"/>
+            <Entry 
+                Text="{Binding Password}"
+                Placeholder="Password"/>
+            <Entry 
+                Text="{Binding RepeatPassword}"
+                Placeholder="RepeatPassword"/>
+            <Button
+                Text="Register now!"
+                Command="{Binding RegisterCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
