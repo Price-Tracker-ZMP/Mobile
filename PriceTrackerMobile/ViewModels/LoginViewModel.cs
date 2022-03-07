@@ -19,7 +19,7 @@ namespace PriceTrackerMobile.ViewModels
             Title = "Login Page";
 
             LoginCommand = new AsyncCommand(Login);
-            RegisterCommand = new AsyncCommand(Register);
+            RegisterCommand = new AsyncCommand(GoToRegisterPage);
         }
 
         async Task Login()
@@ -28,7 +28,7 @@ namespace PriceTrackerMobile.ViewModels
             await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
         }
 
-        async Task Register()
+        async Task GoToRegisterPage()
         {
             await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
         }
