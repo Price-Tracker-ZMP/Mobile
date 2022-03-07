@@ -77,8 +77,11 @@
         <ShellContent ContentTemplate="{DataTemplate local:LoginPage}"/>
     </ShellItem>
 
-    <FlyoutItem Title="Tracked items" Icon="icon_about.png">
+    <FlyoutItem Title="Tracked items" StyleClass="MenuItemLayoutStyle" Icon="icon_about.png">
         <ShellContent Route="TrackedItemsPage" ContentTemplate="{DataTemplate local:TrackedItemsPage}" />
     </FlyoutItem>
+
+    <MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Clicked="Logout_Clicked">
+    </MenuItem>
 
 </Shell>

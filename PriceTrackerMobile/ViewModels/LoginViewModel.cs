@@ -7,7 +7,7 @@ namespace PriceTrackerMobile.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        public string Username { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
 
         public AsyncCommand LoginCommand { get; }
@@ -28,7 +28,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task Register()
         {
-
+            await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
         }
     }
 }
