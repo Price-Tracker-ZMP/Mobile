@@ -22,13 +22,13 @@ namespace PriceTrackerMobile.ViewModels
             Games = new ObservableRangeCollection<Game>();
 
             RefreshCommand = new AsyncCommand(RefreshPage);
-            DeleteCommand = new AsyncCommand<Game>(Delete);
+            DeleteCommand = new AsyncCommand<Game>(DeleteGame);
             AddCommand = new AsyncCommand(GoToAddPage);
 
             RefreshPage();
         }
 
-        async Task Delete(Game game)
+        async Task DeleteGame(Game game)
         {
             if (game == null)
                 return;
