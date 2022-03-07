@@ -1,5 +1,7 @@
 ﻿using MvvmHelpers.Commands;
+using PriceTrackerMobile.Views;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace PriceTrackerMobile.ViewModels
 {
@@ -21,7 +23,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task Login()
         {
-
+            await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
         }
 
         async Task Register()
