@@ -40,5 +40,15 @@ namespace PriceTrackerMobile.Services
             await Init();
             games.Remove(game);
         }
+
+        public static async Task Login()
+        {
+
+        }
+
+        public static async Task Register()
+        {
+
+        }
     }
 }

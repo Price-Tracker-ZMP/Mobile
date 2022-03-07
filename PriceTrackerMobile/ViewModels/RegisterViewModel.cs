@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers.Commands;
+using PriceTrackerMobile.Services;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -21,6 +22,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task Register()
         {
+            await PriceTrackerApiService.Register();
             await Shell.Current.GoToAsync("..");
         }
     }
