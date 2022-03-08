@@ -50,8 +50,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task GoToAddPage()
         {
-            string route = $"{nameof(AddItemPage)}";
-            await Shell.Current.GoToAsync(route);
+            await Shell.Current.GoToAsync($"{nameof(AddItemPage)}");
         }
     }
 }
