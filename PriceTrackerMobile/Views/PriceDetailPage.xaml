@@ -2,20 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
-             xmlns:model="clr-namespace:PriceTrackerMobile.Models"
+             xmlns:charts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="PriceTrackerMobile.Views.PriceDetailPage"
-             x:Name="DetailPage">
+             x:Name="DetailPage"
+             Title="{Binding DetailedGame.Name}">
     <ContentPage.BindingContext>
         <viewmodels:PriceDetailViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label 
-                Text="{Binding DetailedGame.Name}" />
-            <Image 
-                Source="{Binding DetailedGame.ImageUrl}" />
-            <Label 
-                Text="{Binding DetailedGame.Id}" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout VerticalOptions="StartAndExpand" HeightRequest="500">
+                <Image 
+                    Source="{Binding DetailedGame.ImageUrl}" 
+                    HeightRequest="200"/>
+                <charts:ChartView 
+                    Chart="{Binding LineChart}"
+                    HeightRequest="300"
+                    VerticalOptions="Start"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
