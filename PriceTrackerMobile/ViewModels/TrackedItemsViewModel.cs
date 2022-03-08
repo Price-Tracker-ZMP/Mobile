@@ -24,8 +24,6 @@ namespace PriceTrackerMobile.ViewModels
             RefreshCommand = new AsyncCommand(RefreshPage);
             DeleteCommand = new AsyncCommand<Game>(DeleteGame);
             AddCommand = new AsyncCommand(GoToAddPage);
-
-            RefreshPage();
         }
 
         async Task DeleteGame(Game game)

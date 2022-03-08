@@ -1,4 +1,5 @@
-﻿using MvvmHelpers.Commands;
+﻿using MvvmHelpers;
+using MvvmHelpers.Commands;
 using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Views;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace PriceTrackerMobile.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
+        ObservableObject hello;
         public string Email { get; set; }
         public string Password { get; set; }
 
@@ -25,19 +27,12 @@ namespace PriceTrackerMobile.ViewModels
         async Task Login()
         {
             await PriceTrackerApiService.Login();
-            ClearLoginFields();
             await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
         }
 
         async Task GoToRegisterPage()
         {
             await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
-        }
-
-        void ClearLoginFields()
-        {
-            Email = "";
-            Password = "";
         }
     }
 }
