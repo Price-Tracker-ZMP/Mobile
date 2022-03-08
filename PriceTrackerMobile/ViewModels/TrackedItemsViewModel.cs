@@ -15,6 +15,7 @@ namespace PriceTrackerMobile.ViewModels
         public AsyncCommand RefreshCommand { get; }
         public AsyncCommand<Game> DeleteCommand { get; }
         public AsyncCommand AddCommand { get; }
+        public AsyncCommand<Game> DetailsCommand { get; }
 
         public TrackedItemsViewModel()
         {
@@ -24,6 +25,7 @@ namespace PriceTrackerMobile.ViewModels
             RefreshCommand = new AsyncCommand(RefreshPage);
             DeleteCommand = new AsyncCommand<Game>(DeleteGame);
             AddCommand = new AsyncCommand(GoToAddPage);
+            DetailsCommand = new AsyncCommand<Game>(GoToDetailsPage);
         }
 
         async Task DeleteGame(Game game)
@@ -49,6 +51,14 @@ namespace PriceTrackerMobile.ViewModels
         async Task GoToAddPage()
         {
             await Shell.Current.GoToAsync($"{nameof(AddItemPage)}");
+        }
+
+        async Task GoToDetailsPage(Game game)
+        {
+            if (game == null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.Id}");
         }
     }
 }
