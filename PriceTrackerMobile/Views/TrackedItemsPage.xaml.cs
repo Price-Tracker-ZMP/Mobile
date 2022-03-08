@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using PriceTrackerMobile.ViewModels;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PriceTrackerMobile.Views
@@ -9,6 +10,14 @@ namespace PriceTrackerMobile.Views
         public TrackedItemsPage()
         {
             InitializeComponent();
+        }
+
+        protected override async void OnAppearing()
+        {
+            if (BindingContext is TrackedItemsViewModel viewModel)
+            {
+                await viewModel.RefreshPage();
+            }
         }
     }
 }

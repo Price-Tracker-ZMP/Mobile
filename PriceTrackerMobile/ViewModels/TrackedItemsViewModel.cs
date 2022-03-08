@@ -37,7 +37,7 @@ namespace PriceTrackerMobile.ViewModels
             await RefreshPage();
         }
 
-        async Task RefreshPage()
+        public async Task RefreshPage()
         {
             IsBusy = true;
 
