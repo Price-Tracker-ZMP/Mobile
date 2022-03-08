@@ -8,7 +8,7 @@
 ![image](https://user-images.githubusercontent.com/72551592/157284356-c1edbd6e-967c-4299-ab54-6e3cd1ec4f8c.png)
 
 ## Step3
-### Clone repository
+### Clone repository https://github.com/Price-Tracker-ZMP/Mobile.git
 
 ## Step4
 ### Open project (install additionals if neccessary)
