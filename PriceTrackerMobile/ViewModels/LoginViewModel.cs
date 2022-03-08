@@ -25,12 +25,19 @@ namespace PriceTrackerMobile.ViewModels
         async Task Login()
         {
             await PriceTrackerApiService.Login();
+            ClearLoginFields();
             await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
         }
 
         async Task GoToRegisterPage()
         {
             await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
+        }
+
+        void ClearLoginFields()
+        {
+            Email = "";
+            Password = "";
         }
     }
 }
