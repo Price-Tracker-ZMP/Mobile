@@ -24,7 +24,7 @@ namespace PriceTrackerMobile.ViewModels
         }
 
         string[] months = new string[] { "JAN", "FRB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
-        float[] turnoverData = new float[] { 1000, 5000, 3500, 12000, 9000, 15000, 3000, 0, 0, 0, 0, 0 };
+        float[] turnoverData = new float[] { 10, 5, 3.5f, 1.5f, 9, 12, 15, 20, 15, 10, 10, 8 };
         SKColor blueColor = SKColor.Parse("#09C");
 
         public PriceDetailViewModel()
@@ -40,20 +40,27 @@ namespace PriceTrackerMobile.ViewModels
 
         void InitData()
         {
-            var turnoverEntries = new List<ChartEntry>();
+            List<ChartEntry> turnoverEntries = new List<ChartEntry>();
             int i = 0;
-            foreach (var data in turnoverData)
+            foreach (float data in turnoverData)
             {
                 turnoverEntries.Add(new ChartEntry(data)
                 {
                     Color = blueColor,
-                    ValueLabel = $"{data / 1000} k",
+                    ValueLabel = $"{data}€",
                     Label = months[i]
                 });
                 i++;
             }
 
-            LineChart = new LineChart { Entries = turnoverEntries, LabelTextSize = 30f, LabelOrientation = Orientation.Horizontal };
+            LineChart = new LineChart
+            {
+                Entries = turnoverEntries ,
+                LabelTextSize = 30f,
+                LineSize = 10f,
+                LabelOrientation = Orientation.Horizontal,
+                ValueLabelOrientation = Orientation.Horizontal
+            };
         }
     }
 }

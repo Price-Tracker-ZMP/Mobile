@@ -11,10 +11,10 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout VerticalOptions="StartAndExpand" HeightRequest="500">
+            <StackLayout HeightRequest="450">
                 <Image 
                     Source="{Binding DetailedGame.ImageUrl}" 
-                    HeightRequest="200"/>
+                    HeightRequest="150"/>
                 <charts:ChartView 
                     Chart="{Binding LineChart}"
                     HeightRequest="300"
