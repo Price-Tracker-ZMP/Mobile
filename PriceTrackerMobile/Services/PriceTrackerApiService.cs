@@ -1,5 +1,6 @@
 ﻿using PriceTrackerMobile.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PriceTrackerMobile.Services
@@ -49,6 +50,12 @@ namespace PriceTrackerMobile.Services
         public static async Task Register()
         {
 
+        }
+
+        public static async Task<Game> GetGameDetails(int gameId)
+        {
+            await Init();
+            return games.Where(g => g.Id == gameId).FirstOrDefault();
         }
     }
 }
