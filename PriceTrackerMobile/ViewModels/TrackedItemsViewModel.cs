@@ -2,7 +2,9 @@
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Services;
+using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -35,13 +37,14 @@ namespace PriceTrackerMobile.ViewModels
 
             await PriceTrackerApiService.DeleteGame(game);
             await RefreshPage();
+            await new ErrorToastService().ShowAsync("Game deleted");
         }
 
         public async Task RefreshPage()
         {
             IsBusy = true;
 
-            var newGames = await PriceTrackerApiService.GetGames();
+            IEnumerable<Game> newGames = await PriceTrackerApiService.GetGames();
             Games.Clear();
             Games.AddRange(newGames);
 
