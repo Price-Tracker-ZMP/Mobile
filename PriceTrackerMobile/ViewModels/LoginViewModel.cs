@@ -1,6 +1,6 @@
-﻿using MvvmHelpers;
-using MvvmHelpers.Commands;
+﻿using MvvmHelpers.Commands;
 using PriceTrackerMobile.Services;
+using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -27,11 +27,13 @@ namespace PriceTrackerMobile.ViewModels
         {
             await PriceTrackerApiService.Login();
             await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
+            await new ToastService().ShowAsync("Logged");
         }
 
         async Task GoToRegisterPage()
         {
             await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
+            await new SuccessToastService().ShowAsync("Register Now");
         }
     }
 }
