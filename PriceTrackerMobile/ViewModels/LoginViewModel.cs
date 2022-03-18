@@ -9,7 +9,6 @@ namespace PriceTrackerMobile.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        ObservableObject hello;
         public string Email { get; set; }
         public string Password { get; set; }
 
