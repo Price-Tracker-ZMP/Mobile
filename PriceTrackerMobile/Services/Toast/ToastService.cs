@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.CommunityToolkit.UI.Views.Options;
@@ -29,6 +30,16 @@ namespace PriceTrackerMobile.Services.Toast
         {
             options.MessageOptions.Message = message;
             await DisplayToast(options);
+        }
+
+        public async Task ShowAsync(string[] messages)
+        {
+            foreach (string message in messages)
+            {
+                options.MessageOptions.Message = message;
+                await DisplayToast(options);
+                Thread.Sleep((int)TOAST_DURATION * 1000);
+            }
         }
 
         protected async Task DisplayToast(ToastOptions toastOptions)

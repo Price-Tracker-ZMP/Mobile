@@ -1,4 +1,6 @@
 ﻿using MvvmHelpers.Commands;
+using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Requests;
 using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
@@ -25,9 +27,17 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task Login()
         {
-            await PriceTrackerApiService.Login();
-            await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
-            await new ToastService().ShowAsync("Logged");
+            var response = await PriceTrackerApiService.Login( new LoginRequest(Email, Password));
+            if (response.status)
+            {
+                Settings.Token = response.content;
+                await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
+                await new SuccessToastService().ShowAsync(response.message);
+            }
+            else
+            {
+                await new ErrorToastService().ShowAsync(response.message);
+            }
         }
 
         async Task GoToRegisterPage()

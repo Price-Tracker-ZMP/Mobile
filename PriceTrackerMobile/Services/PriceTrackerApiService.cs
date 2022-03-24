@@ -1,18 +1,29 @@
-﻿using PriceTrackerMobile.Models;
+﻿using Newtonsoft.Json;
+using PriceTrackerMobile.Models;
+using PriceTrackerMobile.Requests;
+using PriceTrackerMobile.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PriceTrackerMobile.Services
 {
     public static class PriceTrackerApiService
     {
+        readonly static string baseUrl = "http://10.0.2.2:5001";
+        static HttpClient client;
         static List<Game> games;
 
-        static async Task Init()
+        static PriceTrackerApiService()
         {
-            if (games != null)
-                return;
+            client = new HttpClient()
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
 
             games = new List<Game>();
             List<Game> newGames = new List<Game>()
@@ -26,25 +37,30 @@ namespace PriceTrackerMobile.Services
 
         public static async Task<IEnumerable<Game>> GetGames()
         {
-            await Init();
             return games;
         }
 
         public static async Task AddGame(Game game)
         {
-            await Init();
             games.Add(game);
         }
 
         public static async Task DeleteGame(Game game)
         {
-            await Init();
             games.Remove(game);
         }
 
-        public static async Task Login()
+        public static async Task<ApiResponse<string>> Login(LoginRequest request)
         {
 
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("auth/login", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            var loginResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+            return loginResponse;
         }
 
         public static async Task Register()
@@ -54,7 +70,6 @@ namespace PriceTrackerMobile.Services
 
         public static async Task<Game> GetGameDetails(int gameId)
         {
-            await Init();
             return games.Where(g => g.Id == gameId).FirstOrDefault();
         }
     }
