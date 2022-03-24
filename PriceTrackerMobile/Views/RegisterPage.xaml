@@ -17,10 +17,12 @@
                 Placeholder="Email"/>
             <Entry 
                 Text="{Binding Password}"
-                Placeholder="Password"/>
+                Placeholder="Password"
+                IsPassword="True"/>
             <Entry 
-                Text="{Binding RepeatPassword}"
-                Placeholder="RepeatPassword"/>
+                Text="{Binding ConirmPassword}"
+                Placeholder="RepeatPassword"
+                IsPassword="True"/>
             <Button
                 Text="Register now!"
                 Command="{Binding RegisterCommand}"/>
