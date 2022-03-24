@@ -50,7 +50,7 @@ namespace PriceTrackerMobile.Services
             games.Remove(game);
         }
 
-        public static async Task<ApiResponse<string>> Login(LoginRequest request)
+        public static async Task<ApiResponse<string>> Login(AuthRequest request)
         {
 
             var json = JsonConvert.SerializeObject(request);
@@ -63,9 +63,16 @@ namespace PriceTrackerMobile.Services
             return loginResponse;
         }
 
-        public static async Task Register()
+        public static async Task<ApiResponse<string>> Register(AuthRequest request)
         {
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+            var response = await client.PostAsync("auth/login", content);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            var registerResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+            return registerResponse;
         }
 
         public static async Task<Game> GetGameDetails(int gameId)

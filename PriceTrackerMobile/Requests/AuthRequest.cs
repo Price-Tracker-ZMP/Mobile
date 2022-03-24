@@ -1,11 +1,11 @@
 ﻿namespace PriceTrackerMobile.Requests
 {
-    public class LoginRequest
+    public class AuthRequest
     {
         public string email;
         public string password;
 
-        public LoginRequest(string email, string password)
+        public AuthRequest(string email, string password)
         {
             this.email = email;
             this.password = password;

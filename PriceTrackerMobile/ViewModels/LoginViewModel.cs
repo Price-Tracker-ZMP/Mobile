@@ -27,7 +27,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task Login()
         {
-            var response = await PriceTrackerApiService.Login( new LoginRequest(Email, Password));
+            var response = await PriceTrackerApiService.Login( new AuthRequest(Email, Password));
             if (response.status)
             {
                 Settings.Token = response.content;
@@ -43,7 +43,6 @@ namespace PriceTrackerMobile.ViewModels
         async Task GoToRegisterPage()
         {
             await Shell.Current.GoToAsync($"{nameof(RegisterPage)}");
-            await new SuccessToastService().ShowAsync("Register Now");
         }
     }
 }
