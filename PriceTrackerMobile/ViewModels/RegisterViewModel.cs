@@ -15,9 +15,12 @@ namespace PriceTrackerMobile.ViewModels
 
         public AsyncCommand RegisterCommand { get; }
 
+        IPriceTrackerApiService apiService;
+
         public RegisterViewModel()
         {
             Title = "Register Page";
+            apiService = DependencyService.Get<IPriceTrackerApiService>();
 
             RegisterCommand = new AsyncCommand(Register);
         }
@@ -26,7 +29,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             if (Password == ConirmPassword)
             {
-                var response = await PriceTrackerApiService.Register(new AuthRequest(Email, Password));
+                var response = await apiService.Register(new AuthRequest(Email, Password));
 
                 if (response.status)
                 {

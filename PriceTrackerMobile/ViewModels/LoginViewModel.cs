@@ -17,9 +17,12 @@ namespace PriceTrackerMobile.ViewModels
         public AsyncCommand LoginCommand { get; }
         public AsyncCommand RegisterCommand { get; }
 
+        IPriceTrackerApiService apiService;
+
         public LoginViewModel()
         {
             Title = "Login Page";
+            apiService = DependencyService.Get<IPriceTrackerApiService>();
 
             LoginCommand = new AsyncCommand(Login);
             RegisterCommand = new AsyncCommand(GoToRegisterPage);
@@ -27,7 +30,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task Login()
         {
-            var response = await PriceTrackerApiService.Login( new AuthRequest(Email, Password));
+            var response = await apiService.Login( new AuthRequest(Email, Password));
             if (response.status)
             {
                 Settings.Token = response.content;

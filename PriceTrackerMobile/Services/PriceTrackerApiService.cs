@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Requests;
 using PriceTrackerMobile.Response;
@@ -6,19 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PriceTrackerMobile.Services
 {
-    public static class PriceTrackerApiService
+    public class PriceTrackerApiService : IPriceTrackerApiService
     {
-        readonly static string baseUrl = "https://zmp-price-tracker.herokuapp.com/";
+        readonly string baseUrl = "https://zmp-price-tracker.herokuapp.com/";
         static HttpClient client;
         static List<Game> games;
 
-        static PriceTrackerApiService()
+        public PriceTrackerApiService()
         {
             client = new HttpClient()
             {
@@ -35,12 +35,12 @@ namespace PriceTrackerMobile.Services
             games.AddRange(newGames);
         }
 
-        public static async Task<IEnumerable<Game>> GetGames()
+        public async Task<IEnumerable<Game>> GetGames()
         {
             return games;
         }
 
-        public static async Task AddGame(Game game)
+        public async Task AddGame(Game game)
         {
             games.Add(game);
         }
@@ -50,34 +50,35 @@ namespace PriceTrackerMobile.Services
             games.Remove(game);
         }
 
-        public static async Task<ApiResponse<string>> Login(AuthRequest request)
+        public async Task<ApiResponse<string>> Login(AuthRequest request)
         {
-
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsync("auth/login", content);
-            var stringResponse = await response.Content.ReadAsStringAsync();
-
+            var stringResponse = await PostRequest(request, "auth/login");
             var loginResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+
             return loginResponse;
         }
 
-        public static async Task<ApiResponse<string>> Register(AuthRequest request)
+        public async Task<ApiResponse<string>> Register(AuthRequest request)
+        {
+            var stringResponse = await PostRequest(request, "auth/register");
+            var registerResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+
+            return registerResponse;
+        }
+
+        public async Task<Game> GetGameDetails(int gameId)
+        {
+            return games.Where(g => g.Id == gameId).FirstOrDefault();
+        }
+
+        async Task<string> PostRequest(IRequest request, string path)
         {
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("auth/login", content);
-            var stringResponse = await response.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
 
-            var registerResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
-            return registerResponse;
-        }
-
-        public static async Task<Game> GetGameDetails(int gameId)
-        {
-            return games.Where(g => g.Id == gameId).FirstOrDefault();
+            return response;
         }
     }
 }

@@ -12,12 +12,15 @@ namespace PriceTrackerMobile.ViewModels
         string searchSteamGameUri = "https://store.steampowered.com/games/";
         public string gameUrl { get; set; }
 
+        IPriceTrackerApiService apiService;
+
         public AsyncCommand AddCommand { get; }
         public AsyncCommand BrowseCommand { get; }
 
         public AddItemViewModel()
         {
             Title = "Add Game";
+            apiService = DependencyService.Get<IPriceTrackerApiService>();
 
             AddCommand = new AsyncCommand(AddGame);
             BrowseCommand = new AsyncCommand(OpenBrowser);
@@ -25,7 +28,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task AddGame()
         {
-            await PriceTrackerApiService.AddGame(new Game() { Id = 1, Name = "Nier", ImageUrl = "https://image.ceneostatic.pl/data/products/49127782/i-nier-automata-gra-ps4.jpg" });
+            await apiService.AddGame(new Game() { Id = 1, Name = "Nier", ImageUrl = "https://image.ceneostatic.pl/data/products/49127782/i-nier-automata-gra-ps4.jpg" });
             await Shell.Current.GoToAsync("..");
         }
 
