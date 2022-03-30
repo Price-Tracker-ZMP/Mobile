@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Requests;
 using PriceTrackerMobile.Response;
@@ -51,12 +52,7 @@ namespace PriceTrackerMobile.Services
 
         public async Task<ApiResponse<string>> Login(AuthRequest request)
         {
-
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsync("auth/login", content);
-            var stringResponse = await response.Content.ReadAsStringAsync();
+            var stringResponse = await PostRequest(request, "auth/login");
 
             var loginResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
             return loginResponse;
@@ -64,11 +60,7 @@ namespace PriceTrackerMobile.Services
 
         public async Task<ApiResponse<string>> Register(AuthRequest request)
         {
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await client.PostAsync("auth/login", content);
-            var stringResponse = await response.Content.ReadAsStringAsync();
+            var stringResponse = await PostRequest(request, "auth/register");
 
             var registerResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
             return registerResponse;
@@ -77,6 +69,16 @@ namespace PriceTrackerMobile.Services
         public async Task<Game> GetGameDetails(int gameId)
         {
             return games.Where(g => g.Id == gameId).FirstOrDefault();
+        }
+
+        async Task<string> PostRequest(IRequest request, string path)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
+
+            return response;
         }
     }
 }

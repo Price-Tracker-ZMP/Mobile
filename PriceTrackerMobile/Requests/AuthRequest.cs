@@ -1,6 +1,8 @@
-﻿namespace PriceTrackerMobile.Requests
+﻿using PriceTrackerMobile.Interfaces;
+
+namespace PriceTrackerMobile.Requests
 {
-    public class AuthRequest
+    public class AuthRequest : IRequest
     {
         public string email;
         public string password;
