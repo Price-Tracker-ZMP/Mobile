@@ -4,6 +4,7 @@ using PriceTrackerMobile.Services;
 using SkiaSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace PriceTrackerMobile.ViewModels
 {
@@ -26,15 +27,17 @@ namespace PriceTrackerMobile.ViewModels
         string[] months = new string[] { "JAN", "FRB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
         float[] turnoverData = new float[] { 10, 5, 3.5f, 1.5f, 9, 12, 15, 20, 15, 10, 10, 8 };
         SKColor blueColor = SKColor.Parse("#09C");
+        IPriceTrackerApiService apiService;
 
         public PriceDetailViewModel()
         {
             Title = "Price Detail";
+            apiService = DependencyService.Get<IPriceTrackerApiService>();
         }
 
         public async Task LoadDetails(int gameId)
         {
-            DetailedGame = await PriceTrackerApiService.GetGameDetails(gameId);
+            DetailedGame = await apiService.GetGameDetails(gameId);
             InitData();
         }
 

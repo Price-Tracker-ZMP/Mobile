@@ -14,6 +14,8 @@ namespace PriceTrackerMobile.ViewModels
     {
         public ObservableRangeCollection<Game> Games { get; set; }
 
+        IPriceTrackerApiService apiService;
+
         public AsyncCommand RefreshCommand { get; }
         public AsyncCommand<Game> DeleteCommand { get; }
         public AsyncCommand AddCommand { get; }
@@ -23,6 +25,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             Title = "Tracked Games";
             Games = new ObservableRangeCollection<Game>();
+            apiService = DependencyService.Get<IPriceTrackerApiService>();
 
             RefreshCommand = new AsyncCommand(RefreshPage);
             DeleteCommand = new AsyncCommand<Game>(DeleteGame);
@@ -44,7 +47,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             IsBusy = true;
 
-            IEnumerable<Game> newGames = await PriceTrackerApiService.GetGames();
+            IEnumerable<Game> newGames = await apiService.GetGames();
             Games.Clear();
             Games.AddRange(newGames);
 
