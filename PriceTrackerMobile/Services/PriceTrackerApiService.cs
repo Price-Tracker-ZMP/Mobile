@@ -53,16 +53,16 @@ namespace PriceTrackerMobile.Services
         public async Task<ApiResponse<string>> Login(AuthRequest request)
         {
             var stringResponse = await PostRequest(request, "auth/login");
-
             var loginResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+
             return loginResponse;
         }
 
         public async Task<ApiResponse<string>> Register(AuthRequest request)
         {
             var stringResponse = await PostRequest(request, "auth/register");
-
             var registerResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+
             return registerResponse;
         }
 
