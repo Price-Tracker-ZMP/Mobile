@@ -14,7 +14,7 @@ namespace PriceTrackerMobile.Services
 {
     public static class PriceTrackerApiService
     {
-        readonly static string baseUrl = "http://10.0.2.2:5001";
+        readonly static string baseUrl = "https://zmp-price-tracker.herokuapp.com/";
         static HttpClient client;
         static List<Game> games;
 
