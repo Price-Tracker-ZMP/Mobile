@@ -37,6 +37,7 @@ namespace PriceTrackerMobile.ViewModels
             var response = await apiService.Login( new AuthRequest(Email, Password));
             if (response.status)
             {
+                Settings.AutoLogIn = AutoLogIn;
                 Settings.Token = response.content;
                 await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
                 await new SuccessToastService().ShowAsync(response.message);
@@ -50,7 +51,10 @@ namespace PriceTrackerMobile.ViewModels
         async Task AutoLogin()
         {
             if (AutoLogIn && Settings.Token != "")
+            {
                 await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
+                await new SuccessToastService().ShowAsync("Auto logged!");
+            } 
         }
 
         async Task GoToRegisterPage()
