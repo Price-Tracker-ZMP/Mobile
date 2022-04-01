@@ -9,19 +9,70 @@
         <viewmodels:LoginViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label 
-                Text="Welcome to login page!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-            <Label 
-                Text="Username"
-                />
-            <Entry Placeholder="Email" x:Name="Email"  Text="{Binding Email}"/>
-            <Label Text="Password"/>
-            <Entry Placeholder="Password" x:Name="Password" IsPassword="True" Text="{Binding Password}"/>
-            <Button Text="Login" Command="{Binding LoginCommand}"/>
-            <Button Text="Register" Command="{Binding RegisterCommand}"/>
-        </StackLayout>
+        <Grid Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="70" />
+                <RowDefinition Height="70" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                Text="Welcome to login page!" />
+            <Label
+                Grid.Row="1"
+                Margin="5, 0, 0, 0"
+                Text="Email" />
+            <Entry
+                Grid.Row="2"
+                Grid.ColumnSpan="3"
+                Placeholder="Email"
+                x:Name="Email"
+                Text="{Binding Email}"/>
+            <Label
+                Grid.Row="3"
+                Margin="5, 0, 0, 0"
+                Text="Password"/>
+            <Entry
+                Grid.Row="4"
+                Grid.ColumnSpan="3"
+                Placeholder="Password"
+                x:Name="Password"
+                IsPassword="True"
+                Text="{Binding Password}"/>
+            <Button
+                Grid.Row="5"
+                Grid.Column="0"
+                Text="Login"
+                Command="{Binding LoginCommand}"/>
+            <Label
+                Grid.Row="5"
+                Grid.Column="1"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                Text="Auto logging" />
+            <CheckBox
+                Grid.Row="5"
+                Grid.Column="2"
+                Color="Blue"
+                IsChecked="{Binding AutoLogIn}" />
+            <Button
+                Grid.Row="6"
+                Grid.ColumnSpan="3"
+                Text="Register"
+                Command="{Binding RegisterCommand}"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

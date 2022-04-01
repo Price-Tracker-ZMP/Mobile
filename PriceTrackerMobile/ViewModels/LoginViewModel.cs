@@ -13,6 +13,7 @@ namespace PriceTrackerMobile.ViewModels
     {
         public string Email { get; set; }
         public string Password { get; set; }
+        public bool AutoLogIn { get; set; }
 
         public AsyncCommand LoginCommand { get; }
         public AsyncCommand RegisterCommand { get; }
@@ -22,10 +23,13 @@ namespace PriceTrackerMobile.ViewModels
         public LoginViewModel()
         {
             Title = "Login Page";
+            AutoLogIn = Settings.AutoLogIn;
             apiService = DependencyService.Get<IPriceTrackerApiService>();
 
             LoginCommand = new AsyncCommand(Login);
             RegisterCommand = new AsyncCommand(GoToRegisterPage);
+
+            AutoLogin().Wait();
         }
 
         async Task Login()
@@ -41,6 +45,12 @@ namespace PriceTrackerMobile.ViewModels
             {
                 await new ErrorToastService().ShowAsync(response.message);
             }
+        }
+
+        async Task AutoLogin()
+        {
+            if (AutoLogIn && Settings.Token != "")
+                await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
         }
 
         async Task GoToRegisterPage()
