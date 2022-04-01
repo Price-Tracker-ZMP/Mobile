@@ -1,4 +1,5 @@
-﻿using PriceTrackerMobile.Views;
+﻿using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Views;
 using Xamarin.Forms;
 
 namespace PriceTrackerMobile
@@ -18,6 +19,8 @@ namespace PriceTrackerMobile
 
         async void Logout_Clicked(object sender, System.EventArgs e)
         {
+            Settings.Token = "";
+            Settings.AutoLogIn = false;
             await Current.GoToAsync($"//{nameof(LoginPage)}");
         }
     }

@@ -14,27 +14,15 @@ namespace PriceTrackerMobile.Helpers
             }
         }
 
-        public static string Username
+        public static bool AutoLogIn
         {
             get
             {
-                return AppSettings.GetValueOrDefault(nameof(Username), "");
+                return AppSettings.GetValueOrDefault(nameof(AutoLogIn), false);
             }
             set
             {
-                AppSettings.AddOrUpdateValue(nameof(Username), value);
-            }
-        }
-
-        public static string Password
-        {
-            get
-            {
-                return AppSettings.GetValueOrDefault(nameof(Password), "");
-            }
-            set
-            {
-                AppSettings.AddOrUpdateValue(nameof(Password), value);
+                AppSettings.AddOrUpdateValue(nameof(AutoLogIn), value);
             }
         }
 
