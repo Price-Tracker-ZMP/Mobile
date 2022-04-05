@@ -7,26 +7,34 @@
         <viewmodels:AddItemViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to adding page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Entry 
-                Placeholder="Full steam game url"
-                PlaceholderColor="Red"
-                Text="{Binding gameUrl}"/>
-            <Label 
-                FontSize="Medium"
-                Text="Paste Steam game url that u wanna track and click done"
-                VerticalOptions="Center" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button Text="Browse" Command="{Binding BrowseCommand}"/>
-            <Label 
-                FontSize="Small"
-                Text="Browse button direct you to steam website"
-                VerticalOptions="Center" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button Text="Done" Command="{Binding AddCommand}"/>
-        </StackLayout>
+
+        <CollectionView ItemsSource="{Binding FilteredGames}">
+            <CollectionView.Header>
+                <Grid>
+                    <Label
+                        Grid.Row="0"
+                        Text="Welcome to adding page!"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    <Entry
+                        Grid.Row="1"
+                        Placeholder="Type game"
+                        PlaceholderColor="Blue"
+                        Text="{Binding searchingGamePhrase}" />
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="10,6" BackgroundColor="Gray" CornerRadius="20">
+                        <Label Text="test" FontSize="Title"/>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <Grid>
+                    <Label Text="Footer"/>
+                </Grid>
+            </CollectionView.Footer>
+        </CollectionView>
     </ContentPage.Content>
 </ContentPage>

@@ -17,8 +17,8 @@ namespace PriceTrackerMobile.ViewModels
             set => SetProperty(ref lineChart, value);
         }
 
-        Game detailedGame;
-        public Game DetailedGame
+        FetchedGame detailedGame;
+        public FetchedGame DetailedGame
         {
             get => detailedGame;
             set => SetProperty(ref detailedGame, value);

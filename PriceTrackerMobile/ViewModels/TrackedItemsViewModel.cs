@@ -12,28 +12,28 @@ namespace PriceTrackerMobile.ViewModels
 {
     public class TrackedItemsViewModel : ViewModelBase
     {
-        public ObservableRangeCollection<Game> Games { get; set; }
+        public ObservableRangeCollection<FetchedGame> Games { get; set; }
 
         IPriceTrackerApiService apiService;
 
         public AsyncCommand RefreshCommand { get; }
-        public AsyncCommand<Game> DeleteCommand { get; }
+        public AsyncCommand<FetchedGame> DeleteCommand { get; }
         public AsyncCommand AddCommand { get; }
-        public AsyncCommand<Game> DetailsCommand { get; }
+        public AsyncCommand<FetchedGame> DetailsCommand { get; }
 
         public TrackedItemsViewModel()
         {
             Title = "Tracked Games";
-            Games = new ObservableRangeCollection<Game>();
+            Games = new ObservableRangeCollection<FetchedGame>();
             apiService = DependencyService.Get<IPriceTrackerApiService>();
 
             RefreshCommand = new AsyncCommand(RefreshPage);
-            DeleteCommand = new AsyncCommand<Game>(DeleteGame);
+            DeleteCommand = new AsyncCommand<FetchedGame>(DeleteGame);
             AddCommand = new AsyncCommand(GoToAddPage);
-            DetailsCommand = new AsyncCommand<Game>(GoToDetailsPage);
+            DetailsCommand = new AsyncCommand<FetchedGame>(GoToDetailsPage);
         }
 
-        async Task DeleteGame(Game game)
+        async Task DeleteGame(FetchedGame game)
         {
             if (game == null)
                 return;
@@ -47,7 +47,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             IsBusy = true;
 
-            IEnumerable<Game> newGames = await apiService.GetGames();
+            IEnumerable<FetchedGame> newGames = await apiService.GetGames();
             Games.Clear();
             Games.AddRange(newGames);
 
@@ -59,7 +59,7 @@ namespace PriceTrackerMobile.ViewModels
             await Shell.Current.GoToAsync($"{nameof(AddItemPage)}");
         }
 
-        async Task GoToDetailsPage(Game game)
+        async Task GoToDetailsPage(FetchedGame game)
         {
             if (game == null)
                 return;
