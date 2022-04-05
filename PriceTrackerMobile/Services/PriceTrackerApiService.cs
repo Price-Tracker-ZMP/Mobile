@@ -16,7 +16,7 @@ namespace PriceTrackerMobile.Services
     {
         readonly string baseUrl = "https://zmp-price-tracker.herokuapp.com/";
         static HttpClient client;
-        static List<FetchedGame> games;
+        static List<Game> games;
 
         public PriceTrackerApiService()
         {
@@ -25,27 +25,27 @@ namespace PriceTrackerMobile.Services
                 BaseAddress = new Uri(baseUrl)
             };
 
-            games = new List<FetchedGame>();
-            List<FetchedGame> newGames = new List<FetchedGame>()
+            games = new List<Game>();
+            List<Game> newGames = new List<Game>()
             {
-                new FetchedGame() { Id = 1, Name = "Nier", ImageUrl = "https://image.ceneostatic.pl/data/products/49127782/i-nier-automata-gra-ps4.jpg" },
-                new FetchedGame() { Id = 2, Name = "Sabnautica", ImageUrl = "https://s2.gaming-cdn.com/images/products/1003/orig/game-steam-subnautica-cover.jpg" }
+                new Game() { Id = 1, Name = "Nier", ImageUrl = "https://image.ceneostatic.pl/data/products/49127782/i-nier-automata-gra-ps4.jpg" },
+                new Game() { Id = 2, Name = "Sabnautica", ImageUrl = "https://s2.gaming-cdn.com/images/products/1003/orig/game-steam-subnautica-cover.jpg" }
             };
 
             games.AddRange(newGames);
         }
 
-        public async Task<IEnumerable<FetchedGame>> GetGames()
+        public async Task<IEnumerable<Game>> GetGames()
         {
             return games;
         }
 
-        public async Task AddGame(FetchedGame game)
+        public async Task AddGame(Game game)
         {
             games.Add(game);
         }
 
-        public static async Task DeleteGame(FetchedGame game)
+        public static async Task DeleteGame(Game game)
         {
             games.Remove(game);
         }
@@ -66,7 +66,7 @@ namespace PriceTrackerMobile.Services
             return registerResponse;
         }
 
-        public async Task<FetchedGame> GetGameDetails(int gameId)
+        public async Task<Game> GetGameDetails(int gameId)
         {
             return games.Where(g => g.Id == gameId).FirstOrDefault();
         }

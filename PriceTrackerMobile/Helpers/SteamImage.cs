@@ -2,7 +2,7 @@
 {
     class SteamImage
     {
-        public static string FromId(int id)
+        public static string FromId(long id)
         {
             return $"https://cdn.akamai.steamstatic.com/steam/apps/{id}/header.jpg";
         }

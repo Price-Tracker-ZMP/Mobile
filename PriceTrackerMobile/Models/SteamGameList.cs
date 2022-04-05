@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PriceTrackerMobile.Models
 {
-    class SteamGameList
+    public class SteamGameList
     {
         [JsonProperty("applist")]
         public Applist Applist { get; set; }

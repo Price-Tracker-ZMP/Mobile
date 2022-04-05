@@ -8,14 +8,14 @@ namespace PriceTrackerMobile.Services
 {
     public class SteamGamesService
     {
-        public static async Task<List<Game>> FetchSteamGames()
+        public static async Task<List<FetchedGame>> FetchSteamGames()
         {
             HttpClient client = new HttpClient();
-            var response = await client.GetAsync("http://api.steampowered.com/ISteamApps/GetAppList/v0002/?format=json");
-            var rString = await response.Content.ReadAsStringAsync();
-            var convertedJson = JsonConvert.DeserializeObject<SteamGameList>(rString);
+            HttpResponseMessage response = await client.GetAsync("http://api.steampowered.com/ISteamApps/GetAppList/v0002/?format=json");
+            string rString = await response.Content.ReadAsStringAsync();
+            SteamGameList convertedJson = JsonConvert.DeserializeObject<SteamGameList>(rString);
 
-            var fetchedGames = convertedJson.Applist.Apps;
+            return convertedJson.Applist.Apps;
         }
     }
 }
