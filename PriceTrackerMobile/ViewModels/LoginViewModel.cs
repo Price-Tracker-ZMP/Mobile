@@ -29,7 +29,7 @@ namespace PriceTrackerMobile.ViewModels
             LoginCommand = new AsyncCommand(Login);
             RegisterCommand = new AsyncCommand(GoToRegisterPage);
 
-            AutoLogin().Wait();
+            _ = AutoLogin();
         }
 
         async Task Login()
@@ -54,7 +54,7 @@ namespace PriceTrackerMobile.ViewModels
             {
                 await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
                 await new SuccessToastService().ShowAsync("Auto logged!");
-            } 
+            }
         }
 
         async Task GoToRegisterPage()
