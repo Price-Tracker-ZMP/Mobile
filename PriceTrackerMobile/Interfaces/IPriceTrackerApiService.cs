@@ -13,5 +13,6 @@ namespace PriceTrackerMobile.Services
         Task<IEnumerable<Game>> GetGames();
         Task<ApiResponse<string>> Login(AuthRequest request);
         Task<ApiResponse<string>> Register(AuthRequest request);
+        Task<ApiResponse<List<FetchedGame>>> GetSteamGames();
     }
 }

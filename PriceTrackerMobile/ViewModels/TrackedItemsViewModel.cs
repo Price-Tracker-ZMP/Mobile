@@ -28,7 +28,7 @@ namespace PriceTrackerMobile.ViewModels
             Games = new ObservableRangeCollection<Game>();
             apiService = DependencyService.Get<IPriceTrackerApiService>();
 
-            Settings.AvailableGames = SteamGamesService.FetchSteamGames().Result;
+            Settings.AvailableGames = apiService.GetSteamGames().Result.content;
 
             RefreshCommand = new AsyncCommand(RefreshPage);
             DeleteCommand = new AsyncCommand<Game>(DeleteGame);

@@ -71,6 +71,15 @@ namespace PriceTrackerMobile.Services
             return games.Where(g => g.Id == gameId).FirstOrDefault();
         }
 
+        public async Task<ApiResponse<List<FetchedGame>>> GetSteamGames()
+        {
+            HttpResponseMessage response = await client.GetAsync($"{baseUrl}get-steam-games-list").ConfigureAwait(false);
+            string rString = await response.Content.ReadAsStringAsync();
+            ApiResponse<List<FetchedGame>> convertedJson = JsonConvert.DeserializeObject<ApiResponse<List<FetchedGame>>>(rString);
+
+            return convertedJson;
+        }
+
         async Task<string> PostRequest(IRequest request, string path)
         {
             var json = JsonConvert.SerializeObject(request);

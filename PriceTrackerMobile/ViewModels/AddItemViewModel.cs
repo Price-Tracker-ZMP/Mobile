@@ -34,10 +34,6 @@ namespace PriceTrackerMobile.ViewModels
             {
                 allGames.Add(GameMapper.ConvertFetchedGame(fGame));
             }
-            foreach (Game game in allGames)
-            {
-                game.Name = game.Name.ToLower();
-            }
 
             AddCommand = new AsyncCommand<long>(AddGame);
             FilterGamesCommand = new MvvmHelpers.Commands.Command(FilterGames);
@@ -46,7 +42,7 @@ namespace PriceTrackerMobile.ViewModels
         void FilterGames()
         {
             FilteredGames.Clear();
-            FilteredGames.AddRange(allGames.FindAll(g => g.Name.Contains(searchingGamePhrase.ToLower())));
+            FilteredGames.AddRange(allGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
         }
 
         async Task AddGame(long id)
