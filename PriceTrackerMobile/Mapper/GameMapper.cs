@@ -3,7 +3,7 @@ using PriceTrackerMobile.Models;
 
 namespace PriceTrackerMobile.Mapper
 {
-    public static class Mapper
+    public static class GameMapper
     {
         public static Game ConvertFetchedGame(FetchedGame fetchedGame)
         {

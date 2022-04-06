@@ -2,6 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
+             xmlns:model="clr-namespace:PriceTrackerMobile.Models"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="viewmodels:AddItemViewModel"
              x:Class="PriceTrackerMobile.Views.AddItemPage">
     <ContentPage.BindingContext>
         <viewmodels:AddItemViewModel />
@@ -20,19 +24,40 @@
                         Grid.Row="1"
                         Placeholder="Type game"
                         PlaceholderColor="Blue"
-                        Text="{Binding searchingGamePhrase}" />
+                        Text="{Binding searchingGamePhrase}">
+                        <Entry.Behaviors>
+                            <xct:EventToCommandBehavior EventName="Unfocused"
+                                                        Command="{Binding FilterGamesCommand}"/>
+                        </Entry.Behaviors>
+                    </Entry>
                 </Grid>
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="10,6" BackgroundColor="Gray" CornerRadius="20">
-                        <Label Text="test" FontSize="Title"/>
-                    </Frame>
+                    <SwipeView android:SwipeView.SwipeTransitionMode="Drag">
+                        <SwipeView.RightItems>
+                            <SwipeItems x:DataType="model:Game">
+                                <SwipeItem
+                                    BackgroundColor="Green"
+                                    Text="+"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AddItemViewModel}}, Path=AddCommand}"
+                                    CommandParameter="{Binding Id}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <StackLayout Orientation="Horizontal">
+                            <Image
+                            Source="{Binding ImageUrl}"/>
+                            <Label
+                            Text="{Binding Name}"
+                            FontSize="Title" />
+                        </StackLayout>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
                 <Grid>
-                    <Label Text="Footer"/>
+                    <Label
+                        Text="Footer" />
                 </Grid>
             </CollectionView.Footer>
         </CollectionView>

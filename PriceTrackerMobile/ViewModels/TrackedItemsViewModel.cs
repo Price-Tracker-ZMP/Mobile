@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
+using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Services.Toast;
@@ -12,28 +13,30 @@ namespace PriceTrackerMobile.ViewModels
 {
     public class TrackedItemsViewModel : ViewModelBase
     {
-        public ObservableRangeCollection<FetchedGame> Games { get; set; }
+        public ObservableRangeCollection<Game> Games { get; set; }
 
         IPriceTrackerApiService apiService;
 
         public AsyncCommand RefreshCommand { get; }
-        public AsyncCommand<FetchedGame> DeleteCommand { get; }
+        public AsyncCommand<Game> DeleteCommand { get; }
         public AsyncCommand AddCommand { get; }
-        public AsyncCommand<FetchedGame> DetailsCommand { get; }
+        public AsyncCommand<Game> DetailsCommand { get; }
 
         public TrackedItemsViewModel()
         {
             Title = "Tracked Games";
-            Games = new ObservableRangeCollection<FetchedGame>();
+            Games = new ObservableRangeCollection<Game>();
             apiService = DependencyService.Get<IPriceTrackerApiService>();
 
+            Settings.AvailableGames = SteamGamesService.FetchSteamGames().Result;
+
             RefreshCommand = new AsyncCommand(RefreshPage);
-            DeleteCommand = new AsyncCommand<FetchedGame>(DeleteGame);
+            DeleteCommand = new AsyncCommand<Game>(DeleteGame);
             AddCommand = new AsyncCommand(GoToAddPage);
-            DetailsCommand = new AsyncCommand<FetchedGame>(GoToDetailsPage);
+            DetailsCommand = new AsyncCommand<Game>(GoToDetailsPage);
         }
 
-        async Task DeleteGame(FetchedGame game)
+        async Task DeleteGame(Game game)
         {
             if (game == null)
                 return;
@@ -47,7 +50,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             IsBusy = true;
 
-            IEnumerable<FetchedGame> newGames = await apiService.GetGames();
+            IEnumerable<Game> newGames = await apiService.GetGames();
             Games.Clear();
             Games.AddRange(newGames);
 
@@ -59,7 +62,7 @@ namespace PriceTrackerMobile.ViewModels
             await Shell.Current.GoToAsync($"{nameof(AddItemPage)}");
         }
 
-        async Task GoToDetailsPage(FetchedGame game)
+        async Task GoToDetailsPage(Game game)
         {
             if (game == null)
                 return;

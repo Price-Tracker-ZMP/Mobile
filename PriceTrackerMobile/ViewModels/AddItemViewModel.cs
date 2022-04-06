@@ -1,6 +1,7 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Mapper;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Services;
 using System.Collections.Generic;
@@ -14,24 +15,42 @@ namespace PriceTrackerMobile.ViewModels
         public string searchingGamePhrase { get; set; }
         public ObservableRangeCollection<Game> FilteredGames { get; set; }
 
-        List<FetchedGame> allGames;
+        List<FetchedGame> allFetchedGames;
+        List<Game> allGames;
         IPriceTrackerApiService apiService;
 
-        public AsyncCommand AddCommand { get; }
+        public AsyncCommand<long> AddCommand { get; }
+        public MvvmHelpers.Commands.Command FilterGamesCommand { get; }
 
         public AddItemViewModel()
         {
             Title = "Add Game";
             apiService = DependencyService.Get<IPriceTrackerApiService>();
-            allGames = Settings.AvailableGames;
-
-            AddCommand = new AsyncCommand(AddGame);
+            allFetchedGames = Settings.AvailableGames;
+            allGames = new List<Game>();
             FilteredGames = new ObservableRangeCollection<Game>();
+
+            foreach (FetchedGame fGame in allFetchedGames)
+            {
+                allGames.Add(GameMapper.ConvertFetchedGame(fGame));
+            }
+            foreach (Game game in allGames)
+            {
+                game.Name = game.Name.ToLower();
+            }
+
+            AddCommand = new AsyncCommand<long>(AddGame);
+            FilterGamesCommand = new MvvmHelpers.Commands.Command(FilterGames);
         }
 
-        async Task AddGame()
+        void FilterGames()
         {
-            await apiService.AddGame(new Game() { Id = 1, Name = "Nier", ImageUrl = "https://image.ceneostatic.pl/data/products/49127782/i-nier-automata-gra-ps4.jpg" });
+            FilteredGames.Clear();
+            FilteredGames.AddRange(allGames.FindAll(g => g.Name.Contains(searchingGamePhrase.ToLower())));
+        }
+
+        async Task AddGame(long id)
+        {
             await Shell.Current.GoToAsync("..");
         }
     }
