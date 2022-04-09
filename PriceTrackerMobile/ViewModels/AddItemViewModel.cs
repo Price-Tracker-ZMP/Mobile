@@ -29,6 +29,7 @@ namespace PriceTrackerMobile.ViewModels
             allFetchedGames = Settings.AvailableGames;
             allGames = new List<Game>();
             FilteredGames = new ObservableRangeCollection<Game>();
+            searchingGamePhrase = "";
 
             foreach (FetchedGame fGame in allFetchedGames)
             {

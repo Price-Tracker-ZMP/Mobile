@@ -44,7 +44,7 @@
                                     CommandParameter="{Binding Id}" />
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <StackLayout Orientation="Horizontal">
+                        <StackLayout x:DataType="model:Game" Orientation="Horizontal">
                             <Image
                                 Source="{Binding ImageUrl}"/>
                             <Label
