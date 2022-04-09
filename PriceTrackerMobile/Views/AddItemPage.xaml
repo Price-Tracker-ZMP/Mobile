@@ -40,7 +40,7 @@
                                 <SwipeItem
                                     BackgroundColor="Green"
                                     Text="+"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AddItemViewModel}}, Path=AddCommand}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AddItemViewModel}}, Path=AddByIdCommand}"
                                     CommandParameter="{Binding Id}" />
                             </SwipeItems>
                         </SwipeView.RightItems>

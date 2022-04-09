@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Requests;
@@ -40,9 +41,12 @@ namespace PriceTrackerMobile.Services
             return games;
         }
 
-        public async Task AddGame(Game game)
+        public async Task AddGame(long gameId)
         {
-            games.Add(game);
+            var json = JsonConvert.SerializeObject(new AddGameById() { token = Settings.Token, gameId = gameId });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("add-game/by-name", content).Result.Content.ReadAsStringAsync();
         }
 
         public static async Task DeleteGame(Game game)
