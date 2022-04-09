@@ -1,40 +1,55 @@
-﻿using MvvmHelpers.Commands;
+﻿using MvvmHelpers;
+using MvvmHelpers.Commands;
+using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Mapper;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PriceTrackerMobile.ViewModels
 {
     public class AddItemViewModel : ViewModelBase
     {
-        string searchSteamGameUri = "https://store.steampowered.com/games/";
-        public string gameUrl { get; set; }
+        public string searchingGamePhrase { get; set; }
+        public ObservableRangeCollection<Game> FilteredGames { get; set; }
 
+        List<FetchedGame> allFetchedGames;
+        List<Game> allGames;
         IPriceTrackerApiService apiService;
 
-        public AsyncCommand AddCommand { get; }
-        public AsyncCommand BrowseCommand { get; }
+        public AsyncCommand<long> AddByIdCommand { get; }
+        public MvvmHelpers.Commands.Command FilterGamesCommand { get; }
 
         public AddItemViewModel()
         {
             Title = "Add Game";
             apiService = DependencyService.Get<IPriceTrackerApiService>();
+            allFetchedGames = Settings.AvailableGames;
+            allGames = new List<Game>();
+            FilteredGames = new ObservableRangeCollection<Game>();
+            searchingGamePhrase = "";
 
-            AddCommand = new AsyncCommand(AddGame);
-            BrowseCommand = new AsyncCommand(OpenBrowser);
+            foreach (FetchedGame fGame in allFetchedGames)
+            {
+                allGames.Add(GameMapper.ConvertFetchedGame(fGame));
+            }
+
+            AddByIdCommand = new AsyncCommand<long>(AddGameById);
+            FilterGamesCommand = new MvvmHelpers.Commands.Command(FilterGames);
         }
 
-        async Task AddGame()
+        void FilterGames()
         {
-            await apiService.AddGame(new Game() { Id = 1, Name = "Nier", ImageUrl = "https://image.ceneostatic.pl/data/products/49127782/i-nier-automata-gra-ps4.jpg" });
+            FilteredGames.Clear();
+            FilteredGames.AddRange(allGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
+        }
+
+        async Task AddGameById(long id)
+        {
+            await apiService.AddGame(id);
             await Shell.Current.GoToAsync("..");
-        }
-
-        async Task OpenBrowser()
-        {
-            await Browser.OpenAsync(searchSteamGameUri, BrowserLaunchMode.External);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
+using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Services.Toast;
@@ -26,6 +27,8 @@ namespace PriceTrackerMobile.ViewModels
             Title = "Tracked Games";
             Games = new ObservableRangeCollection<Game>();
             apiService = DependencyService.Get<IPriceTrackerApiService>();
+
+            Settings.AvailableGames = apiService.GetSteamGames().Result.content;
 
             RefreshCommand = new AsyncCommand(RefreshPage);
             DeleteCommand = new AsyncCommand<Game>(DeleteGame);

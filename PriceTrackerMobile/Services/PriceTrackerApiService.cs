@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Requests;
@@ -40,9 +41,12 @@ namespace PriceTrackerMobile.Services
             return games;
         }
 
-        public async Task AddGame(Game game)
+        public async Task AddGame(long gameId)
         {
-            games.Add(game);
+            var json = JsonConvert.SerializeObject(new AddGameById() { token = Settings.Token, gameId = gameId });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("add-game/by-name", content).Result.Content.ReadAsStringAsync();
         }
 
         public static async Task DeleteGame(Game game)
@@ -69,6 +73,15 @@ namespace PriceTrackerMobile.Services
         public async Task<Game> GetGameDetails(int gameId)
         {
             return games.Where(g => g.Id == gameId).FirstOrDefault();
+        }
+
+        public async Task<ApiResponse<List<FetchedGame>>> GetSteamGames()
+        {
+            HttpResponseMessage response = await client.GetAsync($"{baseUrl}get-steam-games-list").ConfigureAwait(false);
+            string rString = await response.Content.ReadAsStringAsync();
+            ApiResponse<List<FetchedGame>> convertedJson = JsonConvert.DeserializeObject<ApiResponse<List<FetchedGame>>>(rString);
+
+            return convertedJson;
         }
 
         async Task<string> PostRequest(IRequest request, string path)

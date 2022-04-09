@@ -1,5 +1,7 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using PriceTrackerMobile.Models;
+using System.Collections.Generic;
 
 namespace PriceTrackerMobile.Helpers
 {
@@ -37,5 +39,7 @@ namespace PriceTrackerMobile.Helpers
                 AppSettings.AddOrUpdateValue(nameof(Token), value);
             }
         }
+
+        public static List<FetchedGame> AvailableGames;
     }
 }

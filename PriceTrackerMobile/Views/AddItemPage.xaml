@@ -2,31 +2,64 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:PriceTrackerMobile.ViewModels"
+             xmlns:model="clr-namespace:PriceTrackerMobile.Models"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="viewmodels:AddItemViewModel"
              x:Class="PriceTrackerMobile.Views.AddItemPage">
     <ContentPage.BindingContext>
         <viewmodels:AddItemViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to adding page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Entry 
-                Placeholder="Full steam game url"
-                PlaceholderColor="Red"
-                Text="{Binding gameUrl}"/>
-            <Label 
-                FontSize="Medium"
-                Text="Paste Steam game url that u wanna track and click done"
-                VerticalOptions="Center" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button Text="Browse" Command="{Binding BrowseCommand}"/>
-            <Label 
-                FontSize="Small"
-                Text="Browse button direct you to steam website"
-                VerticalOptions="Center" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button Text="Done" Command="{Binding AddCommand}"/>
-        </StackLayout>
+
+        <CollectionView ItemsSource="{Binding FilteredGames}">
+            <CollectionView.Header>
+                <Grid>
+                    <Label
+                        Grid.Row="0"
+                        Text="Welcome to adding page!"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    <Entry
+                        Grid.Row="1"
+                        Placeholder="Type game"
+                        PlaceholderColor="Blue"
+                        Text="{Binding searchingGamePhrase}">
+                        <Entry.Behaviors>
+                            <xct:EventToCommandBehavior EventName="Unfocused"
+                                                        Command="{Binding FilterGamesCommand}"/>
+                        </Entry.Behaviors>
+                    </Entry>
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView android:SwipeView.SwipeTransitionMode="Drag">
+                        <SwipeView.RightItems>
+                            <SwipeItems x:DataType="model:Game">
+                                <SwipeItem
+                                    BackgroundColor="Green"
+                                    Text="+"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AddItemViewModel}}, Path=AddByIdCommand}"
+                                    CommandParameter="{Binding Id}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <StackLayout x:DataType="model:Game" Orientation="Horizontal">
+                            <Image
+                                Source="{Binding ImageUrl}"/>
+                            <Label
+                                Text="{Binding Name}"
+                                FontSize="Title" />
+                        </StackLayout>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <Grid>
+                    <Label
+                        Text="Footer" />
+                </Grid>
+            </CollectionView.Footer>
+        </CollectionView>
     </ContentPage.Content>
 </ContentPage>
