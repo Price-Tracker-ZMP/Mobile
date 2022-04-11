@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,7 @@ namespace PriceTrackerMobile.Services
             {
                 BaseAddress = new Uri(baseUrl)
             };
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("authentication", Settings.Token);
 
             games = new List<Game>();
             List<Game> newGames = new List<Game>()
@@ -46,12 +48,12 @@ namespace PriceTrackerMobile.Services
             var json = JsonConvert.SerializeObject(new AddGameById() { token = Settings.Token, gameId = gameId });
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("add-game/by-name", content).Result.Content.ReadAsStringAsync();
+            await client.PostAsync("add-game/by-id", content).Result.Content.ReadAsStringAsync();
         }
 
         public static async Task DeleteGame(Game game)
         {
-            games.Remove(game);
+            
         }
 
         public async Task<ApiResponse<string>> Login(AuthRequest request)
