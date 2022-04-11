@@ -10,7 +10,7 @@ namespace PriceTrackerMobile.Mapper
             Game game = new Game()
             {
                 Name = fetchedGame.Name,
-                Id = fetchedGame.Appid,
+                SteamAppId = fetchedGame.Appid,
                 ImageUrl = SteamImage.FromId(fetchedGame.Appid)
             };
 

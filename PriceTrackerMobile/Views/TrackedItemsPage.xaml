@@ -63,7 +63,7 @@
                                             VerticalOptions="Center" />
                                         <Label
                                             FontSize="Small"
-                                            Text="{Binding Id}"
+                                            Text="{Binding SteamAppId}"
                                             VerticalOptions="Center" />
                                     </StackLayout>
                                 </StackLayout>

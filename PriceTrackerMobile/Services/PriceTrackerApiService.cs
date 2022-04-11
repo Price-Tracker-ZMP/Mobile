@@ -6,9 +6,7 @@ using PriceTrackerMobile.Requests;
 using PriceTrackerMobile.Response;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +16,6 @@ namespace PriceTrackerMobile.Services
     {
         readonly string baseUrl = "https://zmp-price-tracker.herokuapp.com/";
         static HttpClient client;
-        static List<Game> games;
 
         public PriceTrackerApiService()
         {
@@ -26,26 +23,20 @@ namespace PriceTrackerMobile.Services
             {
                 BaseAddress = new Uri(baseUrl)
             };
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("authentication", Settings.Token);
-
-            games = new List<Game>();
-            List<Game> newGames = new List<Game>()
-            {
-                new Game() { Id = 1, Name = "Nier", ImageUrl = "https://image.ceneostatic.pl/data/products/49127782/i-nier-automata-gra-ps4.jpg" },
-                new Game() { Id = 2, Name = "Sabnautica", ImageUrl = "https://s2.gaming-cdn.com/images/products/1003/orig/game-steam-subnautica-cover.jpg" }
-            };
-
-            games.AddRange(newGames);
+            client.DefaultRequestHeaders.Add("authentication", Settings.Token);
         }
 
-        public async Task<IEnumerable<Game>> GetGames()
+        public async Task<ApiResponse<IEnumerable<Game>>> GetGames()
         {
-            return games;
+            var stringResponse = await client.GetAsync("user-info/user-games").Result.Content.ReadAsStringAsync();
+            var finalResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Game>>>(stringResponse);
+
+            return finalResponse;
         }
 
         public async Task AddGame(long gameId)
         {
-            var json = JsonConvert.SerializeObject(new AddGameById() { token = Settings.Token, gameId = gameId });
+            var json = JsonConvert.SerializeObject(gameId);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             await client.PostAsync("add-game/by-id", content).Result.Content.ReadAsStringAsync();
@@ -74,7 +65,7 @@ namespace PriceTrackerMobile.Services
 
         public async Task<Game> GetGameDetails(int gameId)
         {
-            return games.Where(g => g.Id == gameId).FirstOrDefault();
+            return new Game() { Name = "Test" };
         }
 
         public async Task<ApiResponse<List<FetchedGame>>> GetSteamGames()
