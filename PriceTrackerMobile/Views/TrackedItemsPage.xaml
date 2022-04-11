@@ -52,21 +52,55 @@
                                     CommandParameter="{Binding .}" />
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <Grid Padding="10" x:DataType="model:Game">
-                            <Frame CornerRadius="20" HasShadow="True">
-                                <StackLayout Orientation="Horizontal">
-                                    <Image Source="{Binding ImageUrl}" WidthRequest="66" />
-                                    <StackLayout VerticalOptions="Center">
-                                        <Label
+                        <Grid Padding="2" x:DataType="model:Game">
+                            <Frame CornerRadius="10" HasShadow="True">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition Height="25"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding ImageUrl}"
+                                           Grid.Row="0"
+                                           Grid.ColumnSpan="3"
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalOptions="CenterAndExpand"/>
+                                    <Label
+                                            Grid.Row="1"
+                                            Grid.ColumnSpan="3"
                                             FontSize="Large"
                                             Text="{Binding Name}"
-                                            VerticalOptions="Center" />
-                                        <Label
+                                            VerticalOptions="CenterAndExpand"
+                                            HorizontalOptions="CenterAndExpand" />
+                                    <Label
+                                            Grid.Row="2"
+                                            Grid.Column="0"
                                             FontSize="Small"
-                                            Text="{Binding SteamAppId}"
-                                            VerticalOptions="Center" />
-                                    </StackLayout>
-                                </StackLayout>
+                                            Text="{Binding PriceInitial}"
+                                            TextDecorations="Strikethrough"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="CenterAndExpand" />
+                                    <Label
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            FontSize="Small"
+                                            Text="{Binding DiscountPercent}"
+                                            TextColor="Green"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand" />
+                                    <Label
+                                            Grid.Row="2"
+                                            Grid.Column="2"
+                                            FontSize="Large"
+                                            Text="{Binding PriceFinal}"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand" />
+                                </Grid>
                             </Frame>
                         </Grid>
                     </SwipeView>
