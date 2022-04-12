@@ -19,7 +19,7 @@ namespace PriceTrackerMobile.ViewModels
         IPriceTrackerApiService apiService;
 
         public AsyncCommand RefreshCommand { get; }
-        public AsyncCommand<Game> DeleteCommand { get; }
+        public AsyncCommand<long> DeleteCommand { get; }
         public AsyncCommand AddCommand { get; }
         public AsyncCommand<Game> DetailsCommand { get; }
 
@@ -32,19 +32,21 @@ namespace PriceTrackerMobile.ViewModels
             Settings.AvailableGames = apiService.GetSteamGames().Result.content;
 
             RefreshCommand = new AsyncCommand(RefreshPage);
-            DeleteCommand = new AsyncCommand<Game>(DeleteGame);
+            DeleteCommand = new AsyncCommand<long>(DeleteGame);
             AddCommand = new AsyncCommand(GoToAddPage);
             DetailsCommand = new AsyncCommand<Game>(GoToDetailsPage);
         }
 
-        async Task DeleteGame(Game game)
+        async Task DeleteGame(long gameId)
         {
-            if (game == null)
-                return;
-
-            await PriceTrackerApiService.DeleteGame(game);
-            await RefreshPage();
-            await new ErrorToastService().ShowAsync("Game deleted");
+            ApiResponse<object> response = await apiService.DeleteGame(gameId);
+            if (response.status)
+            {
+                await RefreshPage();
+                await new SuccessToastService().ShowAsync(response.message);
+            }
+            else
+                await new ErrorToastService().ShowAsync(response.message);
         }
 
         public async Task RefreshPage()
@@ -65,9 +67,6 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task GoToDetailsPage(Game game)
         {
-            if (game == null)
-                return;
-
             await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.SteamAppId}");
         }
     }
