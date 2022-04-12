@@ -81,7 +81,7 @@
                                             Grid.Row="2"
                                             Grid.Column="0"
                                             FontSize="Small"
-                                            Text="{Binding PriceInitial, StringFormat='{0:C2}'}"
+                                            Text="{Binding PriceInitial, StringFormat='{}{0}PLN'}"
                                             TextDecorations="Strikethrough"
                                             HorizontalOptions="End"
                                             VerticalOptions="CenterAndExpand" />
@@ -89,7 +89,7 @@
                                             Grid.Row="2"
                                             Grid.Column="1"
                                             FontSize="Small"
-                                            Text="{Binding DiscountPercent ,StringFormat='{0}%'}"
+                                            Text="{Binding DiscountPercent ,StringFormat='{}{0}%'}"
                                             TextColor="Green"
                                             HorizontalOptions="CenterAndExpand"
                                             VerticalOptions="CenterAndExpand" />
@@ -97,8 +97,8 @@
                                             Grid.Row="2"
                                             Grid.Column="2"
                                             FontSize="Large"
-                                            Text="{Binding PriceFinal, StringFormat='{0:C2}'}"
-                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{Binding PriceFinal, StringFormat='{}{0}PLN'}"
+                                            HorizontalOptions="Start"
                                             VerticalOptions="CenterAndExpand" />
                                 </Grid>
                             </Frame>

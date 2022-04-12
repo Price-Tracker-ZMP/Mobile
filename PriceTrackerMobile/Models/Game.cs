@@ -8,13 +8,23 @@ namespace PriceTrackerMobile.Models
         [JsonProperty("currency")]
         public string Currency { get; set; }
         [JsonProperty("discountPercent")]
-        public long DiscountPercent { get; set; }
+        public int DiscountPercent { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
+        float priceFinal;
         [JsonProperty("priceFinal")]
-        public long PriceFinal { get; set; }
+        public float PriceFinal
+        {
+            get { return priceFinal; }
+            set { priceFinal = value / 100; }
+        }
+        float priceInitial;
         [JsonProperty("priceInitial")]
-        public long PriceInitial { get; set; }
+        public float PriceInitial
+        {
+            get { return priceInitial; }
+            set { priceInitial = value / 100; }
+        }
         [JsonProperty("steam_appid")]
         public long SteamAppId { get; set; }
         public string ImageUrl
