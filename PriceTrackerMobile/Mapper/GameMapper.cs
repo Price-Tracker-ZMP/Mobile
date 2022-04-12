@@ -1,5 +1,4 @@
-﻿using PriceTrackerMobile.Helpers;
-using PriceTrackerMobile.Models;
+﻿using PriceTrackerMobile.Models;
 
 namespace PriceTrackerMobile.Mapper
 {
@@ -10,8 +9,7 @@ namespace PriceTrackerMobile.Mapper
             Game game = new Game()
             {
                 Name = fetchedGame.Name,
-                Id = fetchedGame.Appid,
-                ImageUrl = SteamImage.FromId(fetchedGame.Appid)
+                SteamAppId = fetchedGame.Appid
             };
 
             return game;

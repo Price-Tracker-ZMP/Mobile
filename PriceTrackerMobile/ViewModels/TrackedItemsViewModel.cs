@@ -2,6 +2,7 @@
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Models;
+using PriceTrackerMobile.Response;
 using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
@@ -50,9 +51,9 @@ namespace PriceTrackerMobile.ViewModels
         {
             IsBusy = true;
 
-            IEnumerable<Game> newGames = await apiService.GetGames();
+            ApiResponse<IEnumerable<Game>> trackedGamesResponse = await apiService.GetGames();
             Games.Clear();
-            Games.AddRange(newGames);
+            Games.AddRange(trackedGamesResponse.content);
 
             IsBusy = false;
         }
@@ -67,7 +68,7 @@ namespace PriceTrackerMobile.ViewModels
             if (game == null)
                 return;
 
-            await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.Id}");
+            await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.SteamAppId}");
         }
     }
 }
