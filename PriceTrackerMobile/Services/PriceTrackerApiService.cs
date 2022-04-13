@@ -44,10 +44,7 @@ namespace PriceTrackerMobile.Services
 
         public async Task<ApiResponse<object>> DeleteGame(long gameId)
         {
-            string json = JsonConvert.SerializeObject(gameId);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            string stringResponse = await client.PostAsync("delete/delete-game", content).Result.Content.ReadAsStringAsync();
+            string stringResponse = await client.DeleteAsync($"{baseUrl}game/delete-game?gameId={gameId}").Result.Content.ReadAsStringAsync();
             ApiResponse<object> response = JsonConvert.DeserializeObject<ApiResponse<object>>(stringResponse);
 
             return response;
