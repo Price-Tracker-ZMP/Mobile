@@ -49,7 +49,7 @@
                                     Text="Delete"
                                     BackgroundColor="Red"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TrackedItemsViewModel}}, Path=DeleteCommand}"
-                                    CommandParameter="{Binding .}" />
+                                    CommandParameter="{Binding SteamAppId}" />
                             </SwipeItems>
                         </SwipeView.RightItems>
                         <Grid Padding="2" x:DataType="model:Game">

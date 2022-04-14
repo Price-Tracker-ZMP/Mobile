@@ -28,37 +28,40 @@ namespace PriceTrackerMobile.Services
 
         public async Task<ApiResponse<IEnumerable<Game>>> GetGames()
         {
-            var stringResponse = await client.GetAsync("user-info/user-games").Result.Content.ReadAsStringAsync();
-            var finalResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Game>>>(stringResponse);
+            string stringResponse = await client.GetAsync("user-info/user-games").Result.Content.ReadAsStringAsync();
+            ApiResponse<IEnumerable<Game>> finalResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Game>>>(stringResponse);
 
             return finalResponse;
         }
 
         public async Task AddGame(long gameId)
         {
-            var json = JsonConvert.SerializeObject(gameId);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            string json = JsonConvert.SerializeObject(gameId);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
             await client.PostAsync("add-game/by-id", content).Result.Content.ReadAsStringAsync();
         }
 
-        public static async Task DeleteGame(Game game)
+        public async Task<ApiResponse<object>> DeleteGame(long gameId)
         {
-            
+            string stringResponse = await client.DeleteAsync($"{baseUrl}delete/game/{gameId}").Result.Content.ReadAsStringAsync();
+            ApiResponse<object> response = JsonConvert.DeserializeObject<ApiResponse<object>>(stringResponse);
+
+            return response;
         }
 
         public async Task<ApiResponse<string>> Login(AuthRequest request)
         {
-            var stringResponse = await PostRequest(request, "auth/login");
-            var loginResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+            string stringResponse = await PostRequest(request, "auth/login");
+            ApiResponse<string> loginResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
 
             return loginResponse;
         }
 
         public async Task<ApiResponse<string>> Register(AuthRequest request)
         {
-            var stringResponse = await PostRequest(request, "auth/register");
-            var registerResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+            string stringResponse = await PostRequest(request, "auth/register");
+            ApiResponse<string> registerResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
 
             return registerResponse;
         }
@@ -79,10 +82,10 @@ namespace PriceTrackerMobile.Services
 
         async Task<string> PostRequest(IRequest request, string path)
         {
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            string json = JsonConvert.SerializeObject(request);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
+            string response = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
 
             return response;
         }

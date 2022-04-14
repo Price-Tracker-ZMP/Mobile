@@ -9,6 +9,7 @@ namespace PriceTrackerMobile.Services
     public interface IPriceTrackerApiService
     {
         Task AddGame(long gameId);
+        Task<ApiResponse<object>> DeleteGame(long gameId);
         Task<Game> GetGameDetails(int gameId);
         Task<ApiResponse<IEnumerable<Game>>> GetGames();
         Task<ApiResponse<string>> Login(AuthRequest request);
