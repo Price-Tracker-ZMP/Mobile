@@ -10,8 +10,12 @@
     <ContentPage.BindingContext>
         <viewmodels:AddItemViewModel />
     </ContentPage.BindingContext>
-    <ContentPage.Content>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add by link" Command="{Binding }"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
         <CollectionView ItemsSource="{Binding FilteredGames}">
             <CollectionView.Header>
                 <Grid>
