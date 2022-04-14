@@ -12,7 +12,7 @@
     </ContentPage.BindingContext>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add by link" Command="{Binding }"/>
+        <ToolbarItem Text="Add by link" Command="{Binding AddByLinkCommand}"/>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>

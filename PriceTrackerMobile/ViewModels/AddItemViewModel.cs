@@ -21,6 +21,7 @@ namespace PriceTrackerMobile.ViewModels
 
         public AsyncCommand<long> AddByIdCommand { get; }
         public MvvmHelpers.Commands.Command FilterGamesCommand { get; }
+        public AsyncCommand AddByLinkCommand { get; }
 
         public AddItemViewModel()
         {
@@ -37,6 +38,7 @@ namespace PriceTrackerMobile.ViewModels
             }
 
             AddByIdCommand = new AsyncCommand<long>(AddGameById);
+            AddByLinkCommand = new AsyncCommand(AddGameByLink);
             FilterGamesCommand = new MvvmHelpers.Commands.Command(FilterGames);
         }
 
@@ -50,6 +52,11 @@ namespace PriceTrackerMobile.ViewModels
         {
             await apiService.AddGame(id);
             await Shell.Current.GoToAsync("..");
+        }
+
+        async Task AddGameByLink()
+        {
+            string link = await Application.Current.MainPage.DisplayPromptAsync("Paste steam link", "Done");
         }
     }
 }
