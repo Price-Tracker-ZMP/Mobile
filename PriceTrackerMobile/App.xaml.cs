@@ -1,4 +1,4 @@
-﻿using PriceTrackerMobile.PriceTrackerMobile.Interfaces;
+﻿using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Services;
 using Xamarin.Forms;
 

@@ -1,6 +1,6 @@
 ﻿using MvvmHelpers.Commands;
+using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Requests;
-using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Services.Toast;
 using System.Threading.Tasks;
 using Xamarin.Forms;

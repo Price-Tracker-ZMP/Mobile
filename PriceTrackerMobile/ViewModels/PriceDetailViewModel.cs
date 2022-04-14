@@ -1,6 +1,6 @@
 ﻿using Microcharts;
 using PriceTrackerMobile.Models;
-using PriceTrackerMobile.PriceTrackerMobile.Interfaces;
+using PriceTrackerMobile.Interfaces;
 using SkiaSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;

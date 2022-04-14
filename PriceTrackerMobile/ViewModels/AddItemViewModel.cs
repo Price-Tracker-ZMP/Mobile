@@ -4,6 +4,7 @@ using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Mapper;
 using PriceTrackerMobile.Models;
+using PriceTrackerMobile.Services.Toast;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -58,7 +59,11 @@ namespace PriceTrackerMobile.ViewModels
         {
             string link = await Application.Current.MainPage.DisplayPromptAsync("Paste steam link", "Done");
 
-            var response = apiService.AddGameByLink(link);
+            var response = await apiService.AddGameByLink(link);
+            if (response.status)
+                await new SuccessToastService().ShowAsync(response.message);
+            else
+                await new ErrorToastService().ShowAsync(response.message);
         }
     }
 }
