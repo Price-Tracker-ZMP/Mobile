@@ -4,7 +4,7 @@ using PriceTrackerMobile.Response;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PriceTrackerMobile.Services
+namespace PriceTrackerMobile.Interfaces
 {
     public interface IPriceTrackerApiService
     {

@@ -1,9 +1,9 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Mapper;
 using PriceTrackerMobile.Models;
-using PriceTrackerMobile.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;

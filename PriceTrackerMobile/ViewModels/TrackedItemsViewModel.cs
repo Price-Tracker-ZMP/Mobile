@@ -1,9 +1,9 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Response;
-using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
 using System.Collections.Generic;
