@@ -42,6 +42,17 @@ namespace PriceTrackerMobile.Services
             await client.PostAsync("add-game/by-id", content).Result.Content.ReadAsStringAsync();
         }
 
+        public async Task<ApiResponse<object>> AddGameByLink(string link)
+        {
+            string json = JsonConvert.SerializeObject(link);
+            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            string stringResponse = await client.PostAsync("add-game/by-link", content).Result.Content.ReadAsStringAsync();
+            ApiResponse<object> response = JsonConvert.DeserializeObject<ApiResponse<object>>(stringResponse);
+
+            return response;
+        }
+
         public async Task<ApiResponse<object>> DeleteGame(long gameId)
         {
             string stringResponse = await client.DeleteAsync($"{baseUrl}delete/game/{gameId}").Result.Content.ReadAsStringAsync();

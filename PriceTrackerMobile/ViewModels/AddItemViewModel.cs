@@ -57,6 +57,8 @@ namespace PriceTrackerMobile.ViewModels
         async Task AddGameByLink()
         {
             string link = await Application.Current.MainPage.DisplayPromptAsync("Paste steam link", "Done");
+
+            var response = apiService.AddGameByLink(link);
         }
     }
 }
