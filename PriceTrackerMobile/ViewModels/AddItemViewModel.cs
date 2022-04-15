@@ -1,9 +1,11 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Mapper;
 using PriceTrackerMobile.Models;
-using PriceTrackerMobile.Services;
+using PriceTrackerMobile.Response;
+using PriceTrackerMobile.Services.Toast;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -21,6 +23,7 @@ namespace PriceTrackerMobile.ViewModels
 
         public AsyncCommand<long> AddByIdCommand { get; }
         public MvvmHelpers.Commands.Command FilterGamesCommand { get; }
+        public AsyncCommand AddByLinkCommand { get; }
 
         public AddItemViewModel()
         {
@@ -37,19 +40,43 @@ namespace PriceTrackerMobile.ViewModels
             }
 
             AddByIdCommand = new AsyncCommand<long>(AddGameById);
+            AddByLinkCommand = new AsyncCommand(AddGameByLink);
             FilterGamesCommand = new MvvmHelpers.Commands.Command(FilterGames);
         }
 
         void FilterGames()
         {
             FilteredGames.Clear();
-            FilteredGames.AddRange(allGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
+            if (searchingGamePhrase != "")
+                FilteredGames.AddRange(allGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
         }
 
         async Task AddGameById(long id)
         {
-            await apiService.AddGame(id);
-            await Shell.Current.GoToAsync("..");
+            ApiResponse response = await apiService.AddGame(id);
+
+            if (response.status)
+            {
+                await Shell.Current.GoToAsync("..");
+                await new SuccessToastService().ShowAsync(response.message);
+            }
+            else
+                await new ErrorToastService().ShowAsync(response.message);
+        }
+
+        async Task AddGameByLink()
+        {
+            string link = await Application.Current.MainPage.DisplayPromptAsync("Paste steam link", "Done");
+
+            ApiResponse response = await apiService.AddGameByLink(link);
+
+            if (response.status)
+            {
+                await Shell.Current.GoToAsync("..");
+                await new SuccessToastService().ShowAsync(response.message);
+            }
+            else
+                await new ErrorToastService().ShowAsync(response.message);
         }
     }
 }

@@ -4,16 +4,17 @@ using PriceTrackerMobile.Response;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PriceTrackerMobile.Services
+namespace PriceTrackerMobile.Interfaces
 {
     public interface IPriceTrackerApiService
     {
-        Task AddGame(long gameId);
-        Task<ApiResponse<object>> DeleteGame(long gameId);
-        Task<Game> GetGameDetails(int gameId);
+        Task<ApiResponse> AddGame(long gameId);
+        Task<ApiResponse> AddGameByLink(string link);
+        Task<ApiResponse> DeleteGame(long gameId);
+        Task<Game> GetGamePriceHistory(int gameId);
         Task<ApiResponse<IEnumerable<Game>>> GetGames();
         Task<ApiResponse<string>> Login(AuthRequest request);
-        Task<ApiResponse<string>> Register(AuthRequest request);
+        Task<ApiResponse> Register(AuthRequest request);
         Task<ApiResponse<List<FetchedGame>>> GetSteamGames();
     }
 }

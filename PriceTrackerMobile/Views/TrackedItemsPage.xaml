@@ -31,7 +31,7 @@
             SelectionMode="Single">
             <CollectionView.EmptyView>
                 <StackLayout Padding="12">
-                    <Label HorizontalOptions="Center" Text="No coffee" />
+                    <Label HorizontalOptions="Center" Text="No games" />
                 </StackLayout>
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>

@@ -1,7 +1,7 @@
 ﻿using MvvmHelpers.Commands;
 using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Requests;
-using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
 using System.Threading.Tasks;
@@ -34,7 +34,8 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task Login()
         {
-            var response = await apiService.Login( new AuthRequest(Email, Password));
+            Response.ApiResponse<string> response = await apiService.Login( new AuthRequest(Email, Password));
+
             if (response.status)
             {
                 Settings.AutoLogIn = AutoLogIn;
@@ -43,9 +44,7 @@ namespace PriceTrackerMobile.ViewModels
                 await new SuccessToastService().ShowAsync(response.message);
             }
             else
-            {
                 await new ErrorToastService().ShowAsync(response.message);
-            }
         }
 
         async Task AutoLogin()

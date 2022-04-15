@@ -1,4 +1,5 @@
-﻿using PriceTrackerMobile.Services;
+﻿using PriceTrackerMobile.Interfaces;
+using PriceTrackerMobile.Services;
 using Xamarin.Forms;
 
 namespace PriceTrackerMobile
