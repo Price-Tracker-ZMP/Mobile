@@ -20,7 +20,8 @@ namespace PriceTrackerMobile.ViewModels
         IPriceTrackerApiService apiService;
 
         public AsyncCommand<long> AddByIdCommand { get; }
-        public MvvmHelpers.Commands.Command FilterGamesCommand { get; }
+        public AsyncCommand FilterGamesCommand { get; }
+        public AsyncCommand AddByLinkCommand { get; }
 
         public AddItemViewModel()
         {
@@ -37,10 +38,11 @@ namespace PriceTrackerMobile.ViewModels
             }
 
             AddByIdCommand = new AsyncCommand<long>(AddGameById);
-            FilterGamesCommand = new MvvmHelpers.Commands.Command(FilterGames);
+            AddByLinkCommand = new AsyncCommand(AddGameByLink);
+            FilterGamesCommand = new AsyncCommand(FilterGames);
         }
 
-        void FilterGames()
+        async Task FilterGames()
         {
             FilteredGames.Clear();
             FilteredGames.AddRange(allGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
