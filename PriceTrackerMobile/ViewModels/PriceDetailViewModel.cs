@@ -1,6 +1,6 @@
 ﻿using Microcharts;
 using PriceTrackerMobile.Models;
-using PriceTrackerMobile.Services;
+using PriceTrackerMobile.Interfaces;
 using SkiaSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,7 +37,7 @@ namespace PriceTrackerMobile.ViewModels
 
         public async Task LoadDetails(int gameId)
         {
-            DetailedGame = await apiService.GetGameDetails(gameId);
+            DetailedGame = await apiService.GetGamePriceHistory(gameId);
             InitData();
         }
 

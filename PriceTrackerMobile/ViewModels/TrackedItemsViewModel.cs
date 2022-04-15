@@ -1,9 +1,9 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
 using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Response;
-using PriceTrackerMobile.Services;
 using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
 using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task DeleteGame(long gameId)
         {
-            ApiResponse<object> response = await apiService.DeleteGame(gameId);
+            ApiResponse response = await apiService.DeleteGame(gameId);
             if (response.status)
             {
                 await RefreshPage();

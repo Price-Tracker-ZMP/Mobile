@@ -10,9 +10,20 @@
     <ContentPage.BindingContext>
         <viewmodels:AddItemViewModel />
     </ContentPage.BindingContext>
-    <ContentPage.Content>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add by link" Command="{Binding AddByLinkCommand}"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
         <CollectionView ItemsSource="{Binding FilteredGames}">
+            <CollectionView.EmptyView>
+                <StackLayout Padding="12">
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="No games" />
+                </StackLayout>
+            </CollectionView.EmptyView>
             <CollectionView.Header>
                 <Grid>
                     <Label
@@ -54,12 +65,6 @@
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-            <CollectionView.Footer>
-                <Grid>
-                    <Label
-                        Text="Footer" />
-                </Grid>
-            </CollectionView.Footer>
         </CollectionView>
     </ContentPage.Content>
 </ContentPage>
