@@ -47,7 +47,8 @@ namespace PriceTrackerMobile.ViewModels
         void FilterGames()
         {
             FilteredGames.Clear();
-            FilteredGames.AddRange(allGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
+            if (searchingGamePhrase != "")
+                FilteredGames.AddRange(allGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
         }
 
         async Task AddGameById(long id)
