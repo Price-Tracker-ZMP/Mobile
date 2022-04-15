@@ -71,7 +71,10 @@ namespace PriceTrackerMobile.ViewModels
             ApiResponse response = await apiService.AddGameByLink(link);
 
             if (response.status)
+            {
+                await Shell.Current.GoToAsync("..");
                 await new SuccessToastService().ShowAsync(response.message);
+            }
             else
                 await new ErrorToastService().ShowAsync(response.message);
         }

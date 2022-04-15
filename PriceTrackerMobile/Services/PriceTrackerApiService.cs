@@ -74,7 +74,7 @@ namespace PriceTrackerMobile.Services
             return registerResponse;
         }
 
-        public async Task<Game> GetGameDetails(int gameId)
+        public async Task<Game> GetGamePriceHistory(int gameId)
         {
             return new Game() { Name = "Test" };
         }

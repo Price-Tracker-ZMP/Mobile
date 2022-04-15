@@ -37,7 +37,7 @@ namespace PriceTrackerMobile.ViewModels
 
         public async Task LoadDetails(int gameId)
         {
-            DetailedGame = await apiService.GetGameDetails(gameId);
+            DetailedGame = await apiService.GetGamePriceHistory(gameId);
             InitData();
         }
 

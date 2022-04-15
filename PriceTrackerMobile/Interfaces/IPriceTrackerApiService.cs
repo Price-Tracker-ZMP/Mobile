@@ -11,7 +11,7 @@ namespace PriceTrackerMobile.Interfaces
         Task<ApiResponse> AddGame(long gameId);
         Task<ApiResponse> AddGameByLink(string link);
         Task<ApiResponse> DeleteGame(long gameId);
-        Task<Game> GetGameDetails(int gameId);
+        Task<Game> GetGamePriceHistory(int gameId);
         Task<ApiResponse<IEnumerable<Game>>> GetGames();
         Task<ApiResponse<string>> Login(AuthRequest request);
         Task<ApiResponse> Register(AuthRequest request);
