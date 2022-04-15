@@ -8,7 +8,7 @@ namespace PriceTrackerMobile.Interfaces
 {
     public interface IPriceTrackerApiService
     {
-        Task AddGame(long gameId);
+        Task<ApiResponse<object>> AddGame(long gameId);
         Task<ApiResponse<object>> AddGameByLink(string link);
         Task<ApiResponse<object>> DeleteGame(long gameId);
         Task<Game> GetGameDetails(int gameId);

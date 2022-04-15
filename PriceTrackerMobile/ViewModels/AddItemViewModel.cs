@@ -4,6 +4,7 @@ using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Mapper;
 using PriceTrackerMobile.Models;
+using PriceTrackerMobile.Response;
 using PriceTrackerMobile.Services.Toast;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -51,15 +52,23 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task AddGameById(long id)
         {
-            await apiService.AddGame(id);
-            await Shell.Current.GoToAsync("..");
+            ApiResponse<object> response = await apiService.AddGame(id);
+
+            if (response.status)
+            {
+                await Shell.Current.GoToAsync("..");
+                await new SuccessToastService().ShowAsync(response.message);
+            }
+            else
+                await new ErrorToastService().ShowAsync(response.message);
         }
 
         async Task AddGameByLink()
         {
             string link = await Application.Current.MainPage.DisplayPromptAsync("Paste steam link", "Done");
 
-            var response = await apiService.AddGameByLink(link);
+            ApiResponse<object> response = await apiService.AddGameByLink(link);
+
             if (response.status)
                 await new SuccessToastService().ShowAsync(response.message);
             else
