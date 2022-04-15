@@ -52,7 +52,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task AddGameById(long id)
         {
-            ApiResponse<object> response = await apiService.AddGame(id);
+            ApiResponse response = await apiService.AddGame(id);
 
             if (response.status)
             {
@@ -67,7 +67,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             string link = await Application.Current.MainPage.DisplayPromptAsync("Paste steam link", "Done");
 
-            ApiResponse<object> response = await apiService.AddGameByLink(link);
+            ApiResponse response = await apiService.AddGameByLink(link);
 
             if (response.status)
                 await new SuccessToastService().ShowAsync(response.message);

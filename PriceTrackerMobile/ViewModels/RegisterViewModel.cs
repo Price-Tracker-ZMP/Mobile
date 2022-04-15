@@ -1,6 +1,7 @@
 ﻿using MvvmHelpers.Commands;
 using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Requests;
+using PriceTrackerMobile.Response;
 using PriceTrackerMobile.Services.Toast;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -29,7 +30,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             if (Password == ConirmPassword)
             {
-                var response = await apiService.Register(new AuthRequest(Email, Password));
+                ApiResponse response = await apiService.Register(new AuthRequest(Email, Password));
 
                 if (response.status)
                 {

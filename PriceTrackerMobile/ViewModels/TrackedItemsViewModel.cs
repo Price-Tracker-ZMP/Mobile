@@ -39,7 +39,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task DeleteGame(long gameId)
         {
-            ApiResponse<object> response = await apiService.DeleteGame(gameId);
+            ApiResponse response = await apiService.DeleteGame(gameId);
             if (response.status)
             {
                 await RefreshPage();

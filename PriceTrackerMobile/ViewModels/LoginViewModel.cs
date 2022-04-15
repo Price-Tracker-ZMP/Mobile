@@ -34,7 +34,8 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task Login()
         {
-            var response = await apiService.Login( new AuthRequest(Email, Password));
+            Response.ApiResponse<string> response = await apiService.Login( new AuthRequest(Email, Password));
+
             if (response.status)
             {
                 Settings.AutoLogIn = AutoLogIn;
@@ -43,9 +44,7 @@ namespace PriceTrackerMobile.ViewModels
                 await new SuccessToastService().ShowAsync(response.message);
             }
             else
-            {
                 await new ErrorToastService().ShowAsync(response.message);
-            }
         }
 
         async Task AutoLogin()
