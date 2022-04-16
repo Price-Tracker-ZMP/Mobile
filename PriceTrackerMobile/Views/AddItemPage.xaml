@@ -17,13 +17,6 @@
     
     <ContentPage.Content>
         <CollectionView ItemsSource="{Binding FilteredGames}">
-            <CollectionView.EmptyView>
-                <StackLayout Padding="12">
-                    <Label
-                        HorizontalOptions="Center"
-                        Text="No games" />
-                </StackLayout>
-            </CollectionView.EmptyView>
             <CollectionView.Header>
                 <Grid>
                     <Label

@@ -36,16 +36,14 @@ namespace PriceTrackerMobile.Services
 
         public async Task<ApiResponse> AddGame(long gameId)
         {
-            string stringResponse = await PostRequest(new AddGameByIdRequest() { gameId = gameId }, "add-game/by-id");
-            ApiResponse<object> response = JsonConvert.DeserializeObject<ApiResponse<object>>(stringResponse);
+            ApiResponse response = await PostRequest<ApiResponse>(new AddGameByIdRequest() { gameId = gameId }, "add-game/by-id");
 
             return response;
         }
 
         public async Task<ApiResponse> AddGameByLink(string link)
         {
-            string stringResponse = await PostRequest(new AddGameByLinkRequest() { link = link }, "add-game/by-link");
-            ApiResponse<object> response = JsonConvert.DeserializeObject<ApiResponse<object>>(stringResponse);
+            ApiResponse response = await PostRequest<ApiResponse>(new AddGameByLinkRequest() { link = link }, "add-game/by-link");
 
             return response;
         }
@@ -60,16 +58,14 @@ namespace PriceTrackerMobile.Services
 
         public async Task<ApiResponse<string>> Login(AuthRequest request)
         {
-            string stringResponse = await PostRequest(request, "auth/login");
-            ApiResponse<string> loginResponse = JsonConvert.DeserializeObject<ApiResponse<string>>(stringResponse);
+            ApiResponse<string> loginResponse = await PostRequest<ApiResponse<string>>(request, "auth/login");
 
             return loginResponse;
         }
 
         public async Task<ApiResponse> Register(AuthRequest request)
         {
-            string stringResponse = await PostRequest(request, "auth/register");
-            ApiResponse registerResponse = JsonConvert.DeserializeObject<ApiResponse>(stringResponse);
+            ApiResponse registerResponse = await PostRequest<ApiResponse>(request, "auth/register");
 
             return registerResponse;
         }
@@ -88,12 +84,22 @@ namespace PriceTrackerMobile.Services
             return convertedJson;
         }
 
-        async Task<string> PostRequest(IRequest request, string path)
+        async Task<T> PostRequest<T>(IRequest request, string path) where T : ApiResponse
         {
             string json = JsonConvert.SerializeObject(request);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            string response = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
+            string stringResponse = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
+            T response = (T)new ApiResponse();
+
+            try
+            {
+                response = JsonConvert.DeserializeObject<T>(stringResponse);
+            }
+            catch (Exception)
+            {
+                response = (T)new ApiResponse() { status = false, message = "Api error" };
+            }
 
             return response;
         }
