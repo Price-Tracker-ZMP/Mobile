@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
+using Plugin.LocalNotification;
 using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Models;
@@ -68,6 +69,14 @@ namespace PriceTrackerMobile.ViewModels
         async Task GoToDetailsPage(Game game)
         {
             await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.SteamAppId}");
+        }
+
+        void ShowNotofication()
+        {
+            var notofication = new NotificationRequest
+            {
+
+            };
         }
     }
 }
