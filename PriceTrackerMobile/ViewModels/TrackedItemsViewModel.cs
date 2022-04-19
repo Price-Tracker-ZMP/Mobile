@@ -10,6 +10,7 @@ using PriceTrackerMobile.Views;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace PriceTrackerMobile.ViewModels
 {
@@ -36,6 +37,8 @@ namespace PriceTrackerMobile.ViewModels
             DeleteCommand = new AsyncCommand<long>(DeleteGame);
             AddCommand = new AsyncCommand(GoToAddPage);
             DetailsCommand = new AsyncCommand<Game>(GoToDetailsPage);
+
+            Task.Run(ShowNotification);
         }
 
         async Task DeleteGame(long gameId)
@@ -71,12 +74,31 @@ namespace PriceTrackerMobile.ViewModels
             await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.SteamAppId}");
         }
 
-        void ShowNotofication()
+        async Task ShowNotification()
         {
-            var notofication = new NotificationRequest
+            while (true)
             {
+                ApiResponse<IEnumerable<Game>> trackedGamesResponse = await apiService.GetGames();
+                if (Games.Count > 0 && trackedGamesResponse.content.Count() != Games.Count)
+                {
+                    break;
+                }
+                await Task.Delay(10000);
+            }
 
+            NotificationRequest notification = new NotificationRequest
+            {
+                Title = "New price check this out!",
+                Description = "New game added",
+                BadgeNumber = 1,
+                CategoryType = NotificationCategoryType.Promo,
+                Schedule = new NotificationRequestSchedule()
+                {
+                    NotifyTime = System.DateTime.Now
+                }
             };
+
+            NotificationCenter.Current.Show(notification);
         }
     }
 }
