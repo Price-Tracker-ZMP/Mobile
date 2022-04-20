@@ -31,14 +31,13 @@ namespace PriceTrackerMobile.ViewModels
             Games = new ObservableRangeCollection<Game>();
             apiService = DependencyService.Get<IPriceTrackerApiService>();
 
-            Settings.AvailableGames = apiService.GetSteamGames().Result.content;
-
             RefreshCommand = new AsyncCommand(RefreshPage);
             DeleteCommand = new AsyncCommand<long>(DeleteGame);
             AddCommand = new AsyncCommand(GoToAddPage);
             DetailsCommand = new AsyncCommand<Game>(GoToDetailsPage);
 
-            Task.Run(ShowNotification);
+            Task.Run(FetchSteamAppsList);
+            Task.Run(StartNotyfying);
         }
 
         async Task DeleteGame(long gameId)
@@ -74,21 +73,19 @@ namespace PriceTrackerMobile.ViewModels
             await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.SteamAppId}");
         }
 
-        async Task ShowNotification()
+        async Task FetchSteamAppsList()
         {
-            while (true)
-            {
-                ApiResponse<IEnumerable<Game>> trackedGamesResponse = await apiService.GetGames();
-                if (Games.Count > 0 && trackedGamesResponse.content.Count() != Games.Count)
-                {
-                    break;
-                }
-                await Task.Delay(10000);
-            }
+            Settings.AvailableGames = apiService.GetSteamGames().Result.content;
+        }
 
-            NotificationRequest notification = new NotificationRequest
+        async Task StartNotyfying()
+        {
+            int millisecondsDelay = 5000;
+
+            List<NotificationRequest> notofications = new List<NotificationRequest>();
+            NotificationRequest basenotification = new NotificationRequest
             {
-                Title = "New price check this out!",
+                Title = "New price, check this out!",
                 Description = "New game added",
                 BadgeNumber = 1,
                 CategoryType = NotificationCategoryType.Promo,
@@ -98,7 +95,38 @@ namespace PriceTrackerMobile.ViewModels
                 }
             };
 
-            NotificationCenter.Current.Show(notification);
+            while (true)
+            {
+                await Task.Delay(millisecondsDelay);
+
+                ApiResponse<IEnumerable<Game>> response = await apiService.GetGames();
+                List<Game> refreshedList = response.content.ToList();
+
+                for (int i = 0; i < Games.Count; i++)
+                {
+                    Game newGame = refreshedList.FirstOrDefault(g => g.Name == Games[i].Name);
+                    if (Games[i].PriceFinal != newGame.PriceFinal)
+                    {
+                        basenotification.Description = $"Price for {Games[i].Name} has changed " +
+                            $"from {Games[i].PriceFinal}{Games[i].Currency} to {refreshedList[i].PriceFinal}{refreshedList[i].Currency}";
+
+                        notofications.Add(basenotification);
+                    }
+                }
+
+                if (notofications.Count > 0)
+                {
+                    Games.Clear();
+                    Games.AddRange(refreshedList);
+
+                    foreach (NotificationRequest notification in notofications)
+                    {
+                        await NotificationCenter.Current.Show(notification);
+                    }
+
+                    notofications.Clear();
+                }
+            }
         }
     }
 }

@@ -90,7 +90,7 @@ namespace PriceTrackerMobile.Services
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
             string stringResponse = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
-            T response = (T)new ApiResponse();
+            ApiResponse response = new ApiResponse();
 
             try
             {
@@ -101,7 +101,7 @@ namespace PriceTrackerMobile.Services
                 response = (T)new ApiResponse() { status = false, message = "Api error" };
             }
 
-            return response;
+            return (T)response;
         }
     }
 }
