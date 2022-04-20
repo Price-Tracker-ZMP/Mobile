@@ -80,20 +80,9 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task StartNotyfying()
         {
-            int millisecondsDelay = 5000;
+            int millisecondsDelay = 30000;
 
             List<NotificationRequest> notofications = new List<NotificationRequest>();
-            NotificationRequest basenotification = new NotificationRequest
-            {
-                Title = "New price, check this out!",
-                Description = "New game added",
-                BadgeNumber = 1,
-                CategoryType = NotificationCategoryType.Promo,
-                Schedule = new NotificationRequestSchedule()
-                {
-                    NotifyTime = System.DateTime.Now
-                }
-            };
 
             while (true)
             {
@@ -107,8 +96,19 @@ namespace PriceTrackerMobile.ViewModels
                     Game newGame = refreshedList.FirstOrDefault(g => g.Name == Games[i].Name);
                     if (Games[i].PriceFinal != newGame.PriceFinal)
                     {
-                        basenotification.Description = $"Price for {Games[i].Name} has changed " +
-                            $"from {Games[i].PriceFinal}{Games[i].Currency} to {refreshedList[i].PriceFinal}{refreshedList[i].Currency}";
+                        NotificationRequest basenotification = new NotificationRequest
+                        {
+                            Title = "New price, check this out!",
+                            Description = $"Price for {Games[i].Name} has changed " +
+                            $"from {Games[i].PriceFinal}{Games[i].Currency} to {refreshedList[i].PriceFinal}{refreshedList[i].Currency}",
+                            BadgeNumber = 10,
+                            NotificationId = i,
+                            CategoryType = NotificationCategoryType.Promo,
+                            Schedule = new NotificationRequestSchedule()
+                            {
+                                NotifyTime = System.DateTime.Now,
+                            }
+                        };
 
                         notofications.Add(basenotification);
                     }
@@ -121,7 +121,7 @@ namespace PriceTrackerMobile.ViewModels
 
                     foreach (NotificationRequest notification in notofications)
                     {
-                        await NotificationCenter.Current.Show(notification);
+                        NotificationCenter.Current.Show(notification);
                     }
 
                     notofications.Clear();
