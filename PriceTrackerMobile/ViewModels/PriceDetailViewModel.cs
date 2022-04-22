@@ -38,12 +38,13 @@ namespace PriceTrackerMobile.ViewModels
             apiService = DependencyService.Get<IPriceTrackerApiService>();
         }
 
-        public async Task LoadDetails(int gameId)
+        public async Task LoadDetails(int gameId, string gameName)
         {
             ApiResponse<PriceHistory> response = await apiService.GetGamePriceHistory(gameId);
             
             if (response.status)
             {
+                Title = gameName;
                 PriceHistory = response.content;
                 days = PriceHistory.dateFinal.ToArrayStringDays();
                 prices = PriceHistory.priceFinal.ToArrayFloatPrices();

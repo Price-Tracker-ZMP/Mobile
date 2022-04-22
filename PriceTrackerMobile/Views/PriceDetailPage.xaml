@@ -10,11 +10,13 @@
         <viewmodels:PriceDetailViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView Orientation="Horizontal">
             <StackLayout>
-                <charts:ChartView HeightRequest="200"
-                    Chart="{Binding LineChart}"
-                    VerticalOptions="Start"/>
+                <charts:ChartView
+                    MinimumHeightRequest="200"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start"
+                    Chart="{Binding LineChart}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
