@@ -5,6 +5,7 @@ using SkiaSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using PriceTrackerMobile.Response;
 
 namespace PriceTrackerMobile.ViewModels
 {
@@ -17,8 +18,8 @@ namespace PriceTrackerMobile.ViewModels
             set => SetProperty(ref lineChart, value);
         }
 
-        Game detailedGame;
-        public Game DetailedGame
+        PriceHistory detailedGame;
+        public PriceHistory DetailedGame
         {
             get => detailedGame;
             set => SetProperty(ref detailedGame, value);
@@ -37,7 +38,8 @@ namespace PriceTrackerMobile.ViewModels
 
         public async Task LoadDetails(int gameId)
         {
-            DetailedGame = await apiService.GetGamePriceHistory(gameId);
+            ApiResponse<PriceHistory> response = await apiService.GetGamePriceHistory(gameId);
+            DetailedGame = response.content;
             InitData();
         }
 

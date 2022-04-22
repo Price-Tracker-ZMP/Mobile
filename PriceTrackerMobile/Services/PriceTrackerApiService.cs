@@ -70,14 +70,18 @@ namespace PriceTrackerMobile.Services
             return registerResponse;
         }
 
-        public async Task<Game> GetGamePriceHistory(int gameId)
+        public async Task<ApiResponse<PriceHistory>> GetGamePriceHistory(int gameId)
         {
-            return new Game() { Name = "Test" };
+            HttpResponseMessage response = await client.GetAsync($"get/game-price-history/{gameId}").ConfigureAwait(false);
+            string rresponseString = await response.Content.ReadAsStringAsync();
+            ApiResponse<PriceHistory> convertedJson = JsonConvert.DeserializeObject<ApiResponse<PriceHistory>>(rresponseString);
+
+            return convertedJson;
         }
 
         public async Task<ApiResponse<List<FetchedGame>>> GetSteamGames()
         {
-            HttpResponseMessage response = await client.GetAsync($"{baseUrl}get-steam-games-list").ConfigureAwait(false);
+            HttpResponseMessage response = await client.GetAsync("get-steam-games-list").ConfigureAwait(false);
             string rresponseString = await response.Content.ReadAsStringAsync();
             ApiResponse<List<FetchedGame>> convertedJson = JsonConvert.DeserializeObject<ApiResponse<List<FetchedGame>>>(rresponseString);
 
