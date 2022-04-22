@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using PriceTrackerMobile.Response;
+using PriceTrackerMobile.Helpers;
+using PriceTrackerMobile.Services.Toast;
 
 namespace PriceTrackerMobile.ViewModels
 {
@@ -18,53 +20,66 @@ namespace PriceTrackerMobile.ViewModels
             set => SetProperty(ref lineChart, value);
         }
 
-        PriceHistory detailedGame;
-        public PriceHistory DetailedGame
+        PriceHistory priceHistory;
+        public PriceHistory PriceHistory
         {
-            get => detailedGame;
-            set => SetProperty(ref detailedGame, value);
+            get => priceHistory;
+            set => SetProperty(ref priceHistory, value);
         }
 
-        string[] months = new string[] { "JAN", "FRB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
-        float[] turnoverData = new float[] { 10, 5, 3.5f, 1.5f, 9, 12, 15, 20, 15, 10, 10, 8 };
+        string[] days = new string[] { };
+        float[] prices = new float[] { };
         SKColor blueColor = SKColor.Parse("#09C");
         IPriceTrackerApiService apiService;
 
         public PriceDetailViewModel()
         {
-            Title = "Price Detail";
+            Title = "Price History";
             apiService = DependencyService.Get<IPriceTrackerApiService>();
         }
 
         public async Task LoadDetails(int gameId)
         {
             ApiResponse<PriceHistory> response = await apiService.GetGamePriceHistory(gameId);
-            DetailedGame = response.content;
+            
+            if (response.status)
+            {
+                PriceHistory = response.content;
+                days = PriceHistory.dateFinal.ToArrayStringDays();
+                prices = PriceHistory.priceFinal.ToArrayFloatPrices();
+
+                await new SuccessToastService().ShowAsync(response.message);
+            }
+            else
+            {
+                await new ErrorToastService().ShowAsync(response.message);
+            }
             InitData();
         }
 
         void InitData()
         {
-            List<ChartEntry> turnoverEntries = new List<ChartEntry>();
+            List<ChartEntry> entries = new List<ChartEntry>();
             int i = 0;
-            foreach (float data in turnoverData)
+            foreach (float price in prices)
             {
-                turnoverEntries.Add(new ChartEntry(data)
+                entries.Add(new ChartEntry(price)
                 {
                     Color = blueColor,
-                    ValueLabel = $"{data}€",
-                    Label = months[i]
+                    ValueLabel = $"{price}PLN",
+                    Label = days[i]
                 });
                 i++;
             }
 
             LineChart = new LineChart
             {
-                Entries = turnoverEntries ,
-                LabelTextSize = 30f,
-                LineSize = 10f,
+                Entries = entries ,
+                LabelTextSize = 15f,
+                LineSize = 5f,
+                LineMode = LineMode.Straight,
                 LabelOrientation = Orientation.Horizontal,
-                ValueLabelOrientation = Orientation.Horizontal
+                ValueLabelOrientation = Orientation.Horizontal,
             };
         }
     }

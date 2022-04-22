@@ -5,19 +5,15 @@
              xmlns:charts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="PriceTrackerMobile.Views.PriceDetailPage"
              x:Name="DetailPage"
-             Title="{Binding DetailedGame.Name}">
+             Title="{Binding Title}">
     <ContentPage.BindingContext>
         <viewmodels:PriceDetailViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout HeightRequest="450">
-                <Image 
-                    Source="{Binding DetailedGame.ImageUrl}" 
-                    HeightRequest="150"/>
-                <charts:ChartView 
+            <StackLayout>
+                <charts:ChartView HeightRequest="200"
                     Chart="{Binding LineChart}"
-                    HeightRequest="300"
                     VerticalOptions="Start"/>
             </StackLayout>
         </ScrollView>
