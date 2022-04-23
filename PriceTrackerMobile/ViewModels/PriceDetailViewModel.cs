@@ -48,7 +48,7 @@ namespace PriceTrackerMobile.ViewModels
                 PriceHistory = response.content;
                 days = PriceHistory.dateFinal.ToArrayStringDays();
                 prices = PriceHistory.priceFinal.ToArrayFloatPrices();
-
+                
                 await new SuccessToastService().ShowAsync(response.message);
             }
             else

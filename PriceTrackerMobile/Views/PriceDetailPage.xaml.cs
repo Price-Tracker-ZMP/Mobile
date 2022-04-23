@@ -1,4 +1,6 @@
-﻿using PriceTrackerMobile.ViewModels;
+﻿using Plugin.DeviceOrientation;
+using Plugin.DeviceOrientation.Abstractions;
+using PriceTrackerMobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -23,9 +25,17 @@ namespace PriceTrackerMobile.Views
 
             if (BindingContext is PriceDetailViewModel viewModel)
             {
+                CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
                 int.TryParse(GameId, out var idResult);
                 await viewModel.LoadDetails(idResult, GameName);
             }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Portrait);
         }
     }
 }

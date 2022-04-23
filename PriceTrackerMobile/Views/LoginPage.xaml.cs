@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using Plugin.DeviceOrientation;
+using Plugin.DeviceOrientation.Abstractions;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace PriceTrackerMobile.Views
@@ -13,6 +15,7 @@ namespace PriceTrackerMobile.Views
 
         protected override void OnAppearing()
         {
+            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Portrait);
             Email.Text = "";
             Password.Text = "";
         }
