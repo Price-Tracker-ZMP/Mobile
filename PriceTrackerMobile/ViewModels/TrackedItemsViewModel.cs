@@ -70,7 +70,7 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task GoToDetailsPage(Game game)
         {
-            await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.SteamAppId}");
+            await Shell.Current.GoToAsync($"{nameof(PriceDetailPage)}?GameId={game.SteamAppId}&GameName={game.Name}");
         }
 
         async Task FetchSteamAppsList()
