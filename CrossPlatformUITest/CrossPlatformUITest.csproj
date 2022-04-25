@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1C074B93-5A37-4AB2-8474-68A3E1E6E2A6}</ProjectGuid>
+    <ProjectGuid>{F7CD1DD3-138A-4357-9071-95E350E0C2DC}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CrossPlatformTest</RootNamespace>
-    <AssemblyName>CrossPlatformTest</AssemblyName>
+    <RootNamespace>CrossPlatformUITest</RootNamespace>
+    <AssemblyName>CrossPlatformUITest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,11 +33,9 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="RegisterPageTests.cs" />
-    <Compile Include="LoginPageTests.cs" />
     <Compile Include="AppInitializer.cs" />
+    <Compile Include="LoginPageTests.cs" />
+    <Compile Include="RegisterPageTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

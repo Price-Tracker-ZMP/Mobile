@@ -1,6 +1,6 @@
 ﻿using Xamarin.UITest;
 
-namespace CrossPlatformTest
+namespace CrossPlatformUITest
 {
     public class AppInitializer
     {

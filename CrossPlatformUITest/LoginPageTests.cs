@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Xamarin.UITest;
 using Xamarin.UITest.Queries;
 
-namespace CrossPlatformTest
+namespace CrossPlatformUITest
 {
     [TestFixture(Platform.Android)]
     public class LoginPageTests
