@@ -16,18 +16,22 @@
                 AutomationId="RegisterWelcome" />
             <Entry 
                 Text="{Binding Email}"
-                Placeholder="Email"/>
+                Placeholder="Email"
+                AutomationId="EmailEntry" />
             <Entry 
                 Text="{Binding Password}"
                 Placeholder="Password"
-                IsPassword="True"/>
+                IsPassword="True"
+                AutomationId="PasswordEntry" />
             <Entry 
                 Text="{Binding ConirmPassword}"
                 Placeholder="RepeatPassword"
-                IsPassword="True"/>
+                IsPassword="True"
+                AutomationId="ConfirmPasswordEntry" />
             <Button
                 Text="Register now!"
-                Command="{Binding RegisterCommand}"/>
+                Command="{Binding RegisterCommand}"
+                AutomationId="RegisterButton" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
