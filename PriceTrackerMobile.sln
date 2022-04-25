@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PriceTrackerMobile", "Price
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossPlatformUITest", "CrossPlatformUITest\CrossPlatformUITest.csproj", "{F7CD1DD3-138A-4357-9071-95E350E0C2DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,18 @@ Global
 		{F7CD1DD3-138A-4357-9071-95E350E0C2DC}.Release|iPhone.Build.0 = Release|Any CPU
 		{F7CD1DD3-138A-4357-9071-95E350E0C2DC}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{F7CD1DD3-138A-4357-9071-95E350E0C2DC}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Release|iPhone.Build.0 = Release|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{8C08B01F-3C2B-4EDA-8F85-FC19DEC5E10E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
