@@ -16,5 +16,6 @@ namespace PriceTrackerMobile.Interfaces
         Task<ApiResponse<string>> Login(AuthRequest request);
         Task<ApiResponse> Register(AuthRequest request);
         Task<ApiResponse<List<FetchedGame>>> GetSteamGames();
+        void ApplayToken();
     }
 }

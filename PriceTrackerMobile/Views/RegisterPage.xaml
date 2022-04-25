@@ -9,9 +9,11 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to register page!"
+            <Label
+                Text="Welcome to register page!"
                 VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                HorizontalOptions="CenterAndExpand"
+                AutomationId="RegisterWelcome" />
             <Entry 
                 Text="{Binding Email}"
                 Placeholder="Email"/>

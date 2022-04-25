@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Linq;
+using System;
 
 namespace PriceTrackerMobile.ViewModels
 {
@@ -58,7 +59,16 @@ namespace PriceTrackerMobile.ViewModels
 
             ApiResponse<IEnumerable<Game>> trackedGamesResponse = await apiService.GetGames();
             Games.Clear();
-            Games.AddRange(trackedGamesResponse.content);
+            
+            try
+            {
+                var games = trackedGamesResponse.content;
+                Games.AddRange(games);
+            }
+            catch(Exception e)
+            {
+                await new ErrorToastService().ShowAsync(trackedGamesResponse.message);
+            }
 
             IsBusy = false;
         }

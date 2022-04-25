@@ -107,5 +107,14 @@ namespace PriceTrackerMobile.Services
 
             return (T)response;
         }
+
+        public void ApplayToken()
+        {
+            client = new HttpClient()
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
+            client.DefaultRequestHeaders.Add("authentication", Settings.Token);
+        }
     }
 }

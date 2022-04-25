@@ -4,6 +4,7 @@ using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Requests;
 using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -40,6 +41,7 @@ namespace PriceTrackerMobile.ViewModels
             {
                 Settings.AutoLogIn = AutoLogIn;
                 Settings.Token = response.content;
+                apiService.ApplayToken();
                 await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
                 await new SuccessToastService().ShowAsync(response.message);
             }

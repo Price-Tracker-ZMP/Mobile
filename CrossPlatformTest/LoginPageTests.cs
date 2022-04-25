@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading;
 using NUnit.Framework;
 using Xamarin.UITest;
 using Xamarin.UITest.Queries;
@@ -74,8 +73,8 @@ namespace CrossPlatformTest
             app.Tap(b => b.Marked("LoginButton"));
             AppResult[] results = app.WaitForElement(t => t.Text("Login"));
             app.Screenshot("Successfull login");
-            
-            Assert.IsTrue(true);
+
+            Assert.IsTrue(results.Any());
         }
 
         [Test]
