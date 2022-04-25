@@ -8,24 +8,58 @@
         <viewmodels:RegisterViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to register page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Entry 
-                Text="{Binding Email}"
-                Placeholder="Email"/>
-            <Entry 
-                Text="{Binding Password}"
-                Placeholder="Password"
-                IsPassword="True"/>
-            <Entry 
-                Text="{Binding ConirmPassword}"
-                Placeholder="RepeatPassword"
-                IsPassword="True"/>
-            <Button
-                Text="Register now!"
-                Command="{Binding RegisterCommand}"/>
-        </StackLayout>
+        <Grid>
+            <Grid Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="70" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Text="Welcome to register page!"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"
+                    AutomationId="RegisterWelcome" />
+                <Entry 
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Text="{Binding Email}"
+                    x:Name="Email"
+                    Placeholder="Email"
+                    AutomationId="EmailEntry" />
+                <Entry 
+                    Grid.Row="2"
+                    Grid.ColumnSpan="3"
+                    Text="{Binding Password}"
+                    x:Name="Password"
+                    Placeholder="Password"
+                    IsPassword="True"
+                    AutomationId="PasswordEntry" />
+                <Entry
+                    Grid.Row="3"
+                    Grid.ColumnSpan="3"
+                    Text="{Binding ConirmPassword}"
+                    x:Name="ConfirmPassword"
+                    Placeholder="ConfirmPassword"
+                    IsPassword="True"
+                    AutomationId="ConfirmPasswordEntry" />
+                <Button
+                    Grid.Row="4"
+                    Grid.ColumnSpan="3"
+                    Text="Register now!"
+                    Command="{Binding RegisterCommand}"
+                    AutomationId="RegisterButton" />
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

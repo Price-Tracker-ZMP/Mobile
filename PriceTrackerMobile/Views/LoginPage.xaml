@@ -30,7 +30,8 @@
                 Grid.ColumnSpan="3"
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand"
-                Text="Welcome to login page!" />
+                Text="Welcome to login page!"
+                AutomationId="LoginWelcome" />
             <Label
                 Grid.Row="1"
                 Margin="5, 0, 0, 0"
@@ -40,7 +41,8 @@
                 Grid.ColumnSpan="3"
                 Placeholder="Email"
                 x:Name="Email"
-                Text="{Binding Email}" />
+                Text="{Binding Email}"
+                AutomationId="EmailEntry" />
             <Label
                 Grid.Row="3"
                 Margin="5, 0, 0, 0"
@@ -51,12 +53,14 @@
                 Placeholder="Password"
                 x:Name="Password"
                 IsPassword="True"
-                Text="{Binding Password}" />
+                Text="{Binding Password}"
+                AutomationId="PasswordEntry" />
             <Button
                 Grid.Row="5"
                 Grid.Column="0"
                 Text="Login"
-                Command="{Binding LoginCommand}" />
+                Command="{Binding LoginCommand}"
+                AutomationId="LoginButton" />
             <Label
                 Grid.Row="5"
                 Grid.Column="1"
@@ -72,7 +76,8 @@
                 Grid.Row="6"
                 Grid.ColumnSpan="3"
                 Text="Register"
-                Command="{Binding RegisterCommand}" />
+                Command="{Binding RegisterCommand}"
+                AutomationId="RegisterButton" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

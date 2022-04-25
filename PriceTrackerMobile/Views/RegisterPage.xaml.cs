@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Plugin.DeviceOrientation;
+using Plugin.DeviceOrientation.Abstractions;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +12,14 @@ namespace PriceTrackerMobile.Views
         public RegisterPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Portrait);
+            Email.Text = "";
+            Password.Text = "";
+            ConfirmPassword.Text = "";
         }
     }
 }
