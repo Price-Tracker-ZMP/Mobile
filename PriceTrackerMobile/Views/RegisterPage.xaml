@@ -34,12 +34,14 @@
                     Grid.Row="1"
                     Grid.ColumnSpan="3"
                     Text="{Binding Email}"
+                    x:Name="Email"
                     Placeholder="Email"
                     AutomationId="EmailEntry" />
                 <Entry 
                     Grid.Row="2"
                     Grid.ColumnSpan="3"
                     Text="{Binding Password}"
+                    x:Name="Password"
                     Placeholder="Password"
                     IsPassword="True"
                     AutomationId="PasswordEntry" />
@@ -47,6 +49,7 @@
                     Grid.Row="3"
                     Grid.ColumnSpan="3"
                     Text="{Binding ConirmPassword}"
+                    x:Name="ConfirmPassword"
                     Placeholder="ConfirmPassword"
                     IsPassword="True"
                     AutomationId="ConfirmPasswordEntry" />

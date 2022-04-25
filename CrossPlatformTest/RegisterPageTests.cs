@@ -24,7 +24,7 @@ namespace CrossPlatformTest
         }
 
         [Test]
-        public void WelcomeTextOnLoginPage()
+        public void WelcomeTextOnRegisterPage()
         {
             AppResult[] results = app.WaitForElement(c => c.Marked("RegisterWelcome"));
             app.Screenshot("Register screen");
@@ -36,7 +36,7 @@ namespace CrossPlatformTest
         public void ShowErrorToastWhenRegisterWithEmptyForm()
         {
             app.Tap(b => b.Marked("RegisterButton"));
-            AppResult[] results = app.WaitForElement(t => t.Text("\"email\" must be a string"));
+            AppResult[] results = app.WaitForElement(t => t.Text("\"email\" is not allowed to be empty"));
             app.Screenshot("Empty Form");
 
             Assert.IsTrue(results.Any());
@@ -46,12 +46,23 @@ namespace CrossPlatformTest
         public void ShowErrorToastWhenRegisterWithoutConfirmEmail()
         {
             app.EnterText(e => e.Marked("EmailEntry"), "admin@admin.com");
-            app.PressEnter();
             app.EnterText(e => e.Marked("PasswordEntry"), "comonPassword");
-            app.PressEnter();
             app.Tap(b => b.Marked("RegisterButton"));
             AppResult[] results = app.WaitForElement(t => t.Text("Passwords not equal"));
             app.Screenshot("Empty Form");
+
+            Assert.IsTrue(results.Any());
+        }
+
+        [Test]
+        public void ShowErrorToastWhenRegisterWithExistedEmail()
+        {
+            app.EnterText(e => e.Marked("EmailEntry"), "admin@admin.com");
+            app.EnterText(e => e.Marked("PasswordEntry"), "comonPassword");
+            app.EnterText(e => e.Marked("ConfirmPasswordEntry"), "comonPassword");
+            app.Tap(b => b.Marked("RegisterButton"));
+            AppResult[] results = app.WaitForElement(t => t.Text("Email already exist"));
+            app.Screenshot("Email exist");
 
             Assert.IsTrue(results.Any());
         }
