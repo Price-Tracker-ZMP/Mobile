@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Linq;
 using System;
+using PriceTrackerMobile.Mapper;
 
 namespace PriceTrackerMobile.ViewModels
 {
@@ -57,18 +58,16 @@ namespace PriceTrackerMobile.ViewModels
         {
             IsBusy = true;
 
-            ApiResponse<IEnumerable<Game>> trackedGamesResponse = await apiService.GetGames();
-            Games.Clear();
-            
-            try
+            ApiResponse<IEnumerable<Game>> response = await apiService.GetGames();
+
+            if (response.status)
             {
-                var games = trackedGamesResponse.content;
+                Games.Clear();
+                var games = response.content;
                 Games.AddRange(games);
             }
-            catch(Exception e)
-            {
-                await new ErrorToastService().ShowAsync(trackedGamesResponse.message);
-            }
+            else
+                await new ErrorToastService().ShowAsync(response.message);
 
             IsBusy = false;
         }
@@ -85,7 +84,14 @@ namespace PriceTrackerMobile.ViewModels
 
         async Task FetchSteamAppsList()
         {
-            Settings.AvailableGames = apiService.GetSteamGames().Result.content;
+            ApiResponse<List<FetchedGame>> response = await apiService.GetSteamGames();
+            if (response.status)
+            {
+                foreach (FetchedGame fGame in response.content)
+                {
+                    Settings.AvailableGames.Add(GameMapper.ConvertFetchedGame(fGame));
+                }
+            }
         }
 
         async Task StartNotyfying()
@@ -116,7 +122,7 @@ namespace PriceTrackerMobile.ViewModels
                             CategoryType = NotificationCategoryType.Promo,
                             Schedule = new NotificationRequestSchedule()
                             {
-                                NotifyTime = System.DateTime.Now,
+                                NotifyTime = DateTime.Now,
                             }
                         };
 

@@ -11,6 +11,7 @@ namespace PriceTrackerMobile
         {
             InitializeComponent();
             DependencyService.Register<IPriceTrackerApiService, PriceTrackerApiService>();
+            DependencyService.Register<IHttpService, HttpService>();
             MainPage = new AppShell();
         }
 

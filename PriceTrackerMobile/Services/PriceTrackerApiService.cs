@@ -1,120 +1,83 @@
-﻿using Newtonsoft.Json;
-using PriceTrackerMobile.Helpers;
-using PriceTrackerMobile.Interfaces;
+﻿using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Models;
 using PriceTrackerMobile.Requests;
 using PriceTrackerMobile.Response;
-using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace PriceTrackerMobile.Services
 {
     public class PriceTrackerApiService : IPriceTrackerApiService
     {
         readonly string baseUrl = "https://zmp-price-tracker.herokuapp.com/";
-        static HttpClient client;
+        IHttpService httpClient;
 
         public PriceTrackerApiService()
         {
-            client = new HttpClient()
-            {
-                BaseAddress = new Uri(baseUrl)
-            };
-            client.DefaultRequestHeaders.Add("authentication", Settings.Token);
+            httpClient = DependencyService.Get<IHttpService>();
+            httpClient.Init(baseUrl);
         }
 
         public async Task<ApiResponse<IEnumerable<Game>>> GetGames()
         {
-            string stringResponse = await client.GetAsync("user-info/user-games").Result.Content.ReadAsStringAsync();
-            ApiResponse<IEnumerable<Game>> finalResponse = JsonConvert.DeserializeObject<ApiResponse<IEnumerable<Game>>>(stringResponse);
+            var getGamesResponse = await httpClient.GetRequestAsync<ApiResponse<IEnumerable<Game>>>("user-info/user-games");
 
-            return finalResponse;
+            return getGamesResponse;
         }
 
         public async Task<ApiResponse> AddGame(long gameId)
         {
-            ApiResponse response = await PostRequest<ApiResponse>(new AddGameByIdRequest() { gameId = gameId }, "add-game/by-id");
+            ApiResponse response = await httpClient.PostRequestAsync<ApiResponse>(new AddGameByIdRequest() { gameId = gameId }, "add-game/by-id");
 
             return response;
         }
 
         public async Task<ApiResponse> AddGameByLink(string link)
         {
-            ApiResponse response = await PostRequest<ApiResponse>(new AddGameByLinkRequest() { link = link }, "add-game/by-link");
+            ApiResponse response = await httpClient.PostRequestAsync<ApiResponse>(new AddGameByLinkRequest() { link = link }, "add-game/by-link");
 
             return response;
         }
 
         public async Task<ApiResponse> DeleteGame(long gameId)
         {
-            string stringResponse = await client.DeleteAsync($"delete/game/{gameId}").Result.Content.ReadAsStringAsync();
-            ApiResponse response = JsonConvert.DeserializeObject<ApiResponse>(stringResponse);
+            ApiResponse deleteResponse = await httpClient.DeleteRequestAsync<ApiResponse>($"delete/game/{gameId}");
 
-            return response;
+            return deleteResponse;
         }
 
         public async Task<ApiResponse<string>> Login(AuthRequest request)
         {
-            ApiResponse<string> loginResponse = await PostRequest<ApiResponse<string>>(request, "auth/login");
+            ApiResponse<string> loginResponse = await httpClient.PostRequestAsync<ApiResponse<string>>(request, "auth/login");
 
             return loginResponse;
         }
 
         public async Task<ApiResponse> Register(AuthRequest request)
         {
-            ApiResponse registerResponse = await PostRequest<ApiResponse>(request, "auth/register");
+            ApiResponse registerResponse = await httpClient.PostRequestAsync<ApiResponse>(request, "auth/register");
 
             return registerResponse;
         }
 
         public async Task<ApiResponse<PriceHistory>> GetGamePriceHistory(int gameId)
         {
-            HttpResponseMessage response = await client.GetAsync($"get/game-price-history/{gameId}").ConfigureAwait(false);
-            string rresponseString = await response.Content.ReadAsStringAsync();
-            ApiResponse<PriceHistory> convertedJson = JsonConvert.DeserializeObject<ApiResponse<PriceHistory>>(rresponseString);
+            var priceHistoryResponse = await httpClient.GetRequestAsync<ApiResponse<PriceHistory>>($"get/game-price-history/{gameId}");
 
-            return convertedJson;
+            return priceHistoryResponse;
         }
 
         public async Task<ApiResponse<List<FetchedGame>>> GetSteamGames()
         {
-            HttpResponseMessage response = await client.GetAsync("get-steam-games-list").ConfigureAwait(false);
-            string rresponseString = await response.Content.ReadAsStringAsync();
-            ApiResponse<List<FetchedGame>> convertedJson = JsonConvert.DeserializeObject<ApiResponse<List<FetchedGame>>>(rresponseString);
+            var getGamesResponse = await httpClient.GetRequestAsync<ApiResponse<List<FetchedGame>>>("get-steam-games-list");
 
-            return convertedJson;
-        }
-
-        async Task<T> PostRequest<T>(IRequest request, string path) where T : ApiResponse
-        {
-            string json = JsonConvert.SerializeObject(request);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            string stringResponse = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
-            ApiResponse response = new ApiResponse();
-
-            try
-            {
-                response = JsonConvert.DeserializeObject<T>(stringResponse);
-            }
-            catch (Exception)
-            {
-                response = (T)new ApiResponse() { status = false, message = "Api error" };
-            }
-
-            return (T)response;
+            return getGamesResponse;
         }
 
         public void ApplayToken()
         {
-            client = new HttpClient()
-            {
-                BaseAddress = new Uri(baseUrl)
-            };
-            client.DefaultRequestHeaders.Add("authentication", Settings.Token);
+            httpClient.ApplayToken();
         }
     }
 }

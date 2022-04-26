@@ -17,8 +17,6 @@ namespace PriceTrackerMobile.ViewModels
         public string searchingGamePhrase { get; set; }
         public ObservableRangeCollection<Game> FilteredGames { get; set; }
 
-        List<FetchedGame> allFetchedGames;
-        List<Game> allGames;
         IPriceTrackerApiService apiService;
 
         public AsyncCommand<long> AddByIdCommand { get; }
@@ -29,15 +27,8 @@ namespace PriceTrackerMobile.ViewModels
         {
             Title = "Add Game";
             apiService = DependencyService.Get<IPriceTrackerApiService>();
-            allFetchedGames = Settings.AvailableGames;
-            allGames = new List<Game>();
             FilteredGames = new ObservableRangeCollection<Game>();
             searchingGamePhrase = "";
-
-            foreach (FetchedGame fGame in allFetchedGames)
-            {
-                allGames.Add(GameMapper.ConvertFetchedGame(fGame));
-            }
 
             AddByIdCommand = new AsyncCommand<long>(AddGameById);
             AddByLinkCommand = new AsyncCommand(AddGameByLink);
@@ -48,7 +39,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             FilteredGames.Clear();
             if (searchingGamePhrase != "")
-                FilteredGames.AddRange(allGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
+                FilteredGames.AddRange(Settings.AvailableGames.FindAll(g => g.Name.ToLower().Contains(searchingGamePhrase.ToLower())));
         }
 
         async Task AddGameById(long id)
