@@ -9,9 +9,5 @@ namespace PriceTrackerMobile.Models
 
         [JsonProperty("name")]
         public string Name { get; set; }
-
-        public FetchedGame()
-        {
-        }
     }
 }

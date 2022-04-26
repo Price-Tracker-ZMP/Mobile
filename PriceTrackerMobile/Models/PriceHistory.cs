@@ -11,9 +11,5 @@ namespace PriceTrackerMobile.Models
         public List<DateTime> dateInitial { get; set; }
         public List<int> priceFinal { get; set; }
         public List<DateTime> dateFinal { get; set; }
-
-        public PriceHistory()
-        {
-        }
     }
 }
