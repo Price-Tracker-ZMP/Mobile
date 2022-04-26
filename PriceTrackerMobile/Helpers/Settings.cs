@@ -40,6 +40,6 @@ namespace PriceTrackerMobile.Helpers
             }
         }
 
-        public static List<FetchedGame> AvailableGames = new List<FetchedGame>();
+        public static List<Game> AvailableGames = new List<Game>();
     }
 }

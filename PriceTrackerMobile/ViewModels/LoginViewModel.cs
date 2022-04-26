@@ -52,6 +52,7 @@ namespace PriceTrackerMobile.ViewModels
         {
             if (AutoLogIn && Settings.Token != "")
             {
+                apiService.ApplayToken();
                 await Shell.Current.GoToAsync($"//{nameof(TrackedItemsPage)}");
                 await new SuccessToastService().ShowAsync("Auto logged!");
             }

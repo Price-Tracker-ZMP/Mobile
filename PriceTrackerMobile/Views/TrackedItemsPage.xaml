@@ -40,14 +40,14 @@
                         <SwipeView.RightItems>
                             <SwipeItems x:DataType="model:Game">
                                 <SwipeItem
-                                    BackgroundColor="Orange"
+                                    BackgroundColor="Transparent"
                                     Text="Details"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TrackedItemsViewModel}}, Path=DetailsCommand}"
                                     CommandParameter="{Binding .}" />
                                 <SwipeItem
                                     IsDestructive="True"
                                     Text="Delete"
-                                    BackgroundColor="Red"
+                                    BackgroundColor="Transparent"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:TrackedItemsViewModel}}, Path=DeleteCommand}"
                                     CommandParameter="{Binding SteamAppId}" />
                             </SwipeItems>
@@ -109,3 +109,4 @@
         </CollectionView>
     </RefreshView>
 </ContentPage>
+    
