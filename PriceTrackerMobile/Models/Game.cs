@@ -38,5 +38,9 @@ namespace PriceTrackerMobile.Models
                 ImageUrl = value;
             }
         }
+
+        public Game()
+        {
+        }
     }
 }

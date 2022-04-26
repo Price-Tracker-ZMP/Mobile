@@ -4,7 +4,6 @@ using PriceTrackerMobile.Interfaces;
 using PriceTrackerMobile.Requests;
 using PriceTrackerMobile.Services.Toast;
 using PriceTrackerMobile.Views;
-using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
