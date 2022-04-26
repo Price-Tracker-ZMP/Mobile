@@ -57,18 +57,16 @@ namespace PriceTrackerMobile.ViewModels
         {
             IsBusy = true;
 
-            ApiResponse<IEnumerable<Game>> trackedGamesResponse = await apiService.GetGames();
-            Games.Clear();
-            
-            try
+            ApiResponse<IEnumerable<Game>> response = await apiService.GetGames();
+
+            if (response.status)
             {
-                var games = trackedGamesResponse.content;
+                Games.Clear();
+                var games = response.content;
                 Games.AddRange(games);
             }
-            catch(Exception e)
-            {
-                await new ErrorToastService().ShowAsync(trackedGamesResponse.message);
-            }
+            else
+                await new ErrorToastService().ShowAsync(response.message);
 
             IsBusy = false;
         }
