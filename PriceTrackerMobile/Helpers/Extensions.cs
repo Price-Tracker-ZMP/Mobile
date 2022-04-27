@@ -15,12 +15,12 @@ namespace PriceTrackerMobile.Helpers
             return prices;
         }
 
-        public static string[] ToArrayStringDays(this List<DateTime> list)
+        public static string[] ToArrayStringChartDate(this List<DateTime> list)
         {
             string[] days = new string[list.Count];
 
             for (int i = 0; i < list.Count; i++)
-                days[i] = list[i].Day.ToString();
+                days[i] = $"{list[i].Month}/{list[i].Day}";
 
             return days;
         }

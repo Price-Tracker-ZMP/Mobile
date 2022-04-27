@@ -27,7 +27,7 @@ namespace PriceTrackerMobile.ViewModels
             set => SetProperty(ref priceHistory, value);
         }
 
-        string[] days = new string[] { };
+        string[] dates = new string[] { };
         float[] prices = new float[] { };
         SKColor blueColor = SKColor.Parse("#09C");
         IPriceTrackerApiService apiService;
@@ -46,7 +46,7 @@ namespace PriceTrackerMobile.ViewModels
             {
                 Title = gameName;
                 PriceHistory = response.content;
-                days = PriceHistory.dateFinal.ToArrayStringDays();
+                dates = PriceHistory.dateFinal.ToArrayStringChartDate();
                 prices = PriceHistory.priceFinal.ToArrayFloatPrices();
                 
                 await new SuccessToastService().ShowAsync(response.message);
@@ -68,7 +68,7 @@ namespace PriceTrackerMobile.ViewModels
                 {
                     Color = blueColor,
                     ValueLabel = $"{price}PLN",
-                    Label = days[i]
+                    Label = dates[i]
                 });
                 i++;
             }
