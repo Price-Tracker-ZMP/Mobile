@@ -11,11 +11,11 @@ namespace PriceTrackerMobile.Services
     public class PriceTrackerApiService : IPriceTrackerApiService
     {
         readonly string baseUrl = "https://zmp-price-tracker.herokuapp.com/";
-        IHttpService httpClient;
+        IHttpService<ApiResponse> httpClient;
 
         public PriceTrackerApiService()
         {
-            httpClient = DependencyService.Get<IHttpService>();
+            httpClient = DependencyService.Get<IHttpService<ApiResponse>>();
             httpClient.Init(baseUrl);
         }
 

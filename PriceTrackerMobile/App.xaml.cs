@@ -1,4 +1,5 @@
 ﻿using PriceTrackerMobile.Interfaces;
+using PriceTrackerMobile.Response;
 using PriceTrackerMobile.Services;
 using Xamarin.Forms;
 
@@ -11,7 +12,7 @@ namespace PriceTrackerMobile
         {
             InitializeComponent();
             DependencyService.Register<IPriceTrackerApiService, PriceTrackerApiService>();
-            DependencyService.Register<IHttpService, HttpService>();
+            DependencyService.Register<IHttpService<ApiResponse>, HttpService<ApiResponse>>();
             MainPage = new AppShell();
         }
 

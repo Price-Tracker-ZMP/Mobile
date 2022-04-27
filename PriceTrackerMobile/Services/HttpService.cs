@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PriceTrackerMobile.Helpers;
 using PriceTrackerMobile.Interfaces;
+using PriceTrackerMobile.Response;
 using System;
 using System.Net.Http;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PriceTrackerMobile.Services
 {
-    public class HttpService : IHttpService
+    public class HttpService<T> : IHttpService<T> where T : ApiResponse, new()
     {
         public HttpClient client;
 
@@ -20,64 +21,64 @@ namespace PriceTrackerMobile.Services
             };
         }
 
-        async Task<T> IHttpService.PostRequestAsync<T>(IRequest request, string path)
+        async Task<T2> IHttpService<T>.PostRequestAsync<T2>(IRequest request, string path)
         {
-            T response = new T();
+            T2 response = new T2();
             string json = JsonConvert.SerializeObject(request);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
             try
             {
                 string stringResponse = await client.PostAsync(path, content).Result.Content.ReadAsStringAsync();
-                response = JsonConvert.DeserializeObject<T>(stringResponse);
+                response = JsonConvert.DeserializeObject<T2>(stringResponse);
             }
             catch (Exception)
             {
-                response = new T() { status = false, message = "Connection error" };
+                response = new T2() { status = false, message = "Connection error" };
             }
 
             return response;
         }
 
-        async Task<T> IHttpService.GetRequestAsync<T>(string path)
+        async Task<T2> IHttpService<T>.GetRequestAsync<T2>(string path)
         {
             HttpResponseMessage httpRequest = new HttpResponseMessage();
-            T resposne = new T();
+            T2 resposne = new T2();
 
             try
             {
                 httpRequest = await client.GetAsync(path).ConfigureAwait(false);
                 string rresponseString = await httpRequest.Content.ReadAsStringAsync();
-                resposne = JsonConvert.DeserializeObject<T>(rresponseString);
+                resposne = JsonConvert.DeserializeObject<T2>(rresponseString);
             }
             catch (Exception)
             {
-                resposne = new T() { status = false, message = "Connection error" };
+                resposne = new T2() { status = false, message = "Connection error" };
             }
 
             return resposne;
         }
 
-        async Task<T> IHttpService.DeleteRequestAsync<T>(string path)
+        async Task<T2> IHttpService<T>.DeleteRequestAsync<T2>(string path)
         {
             HttpResponseMessage httpRequest = new HttpResponseMessage();
-            T resposne = new T();
+            T2 resposne = new T2();
 
             try
             {
                 httpRequest = await client.DeleteAsync(path);
                 string rresponseString = await httpRequest.Content.ReadAsStringAsync();
-                resposne = JsonConvert.DeserializeObject<T>(rresponseString);
+                resposne = JsonConvert.DeserializeObject<T2>(rresponseString);
             }
             catch (Exception)
             {
-                resposne = new T() { status = false, message = "Connection error" };
+                resposne = new T2() { status = false, message = "Connection error" };
             }
 
             return resposne;
         }
 
-        void IHttpService.ApplayToken()
+        void IHttpService<T>.ApplayToken()
         {
             client.DefaultRequestHeaders.Add("authentication", Settings.Token);
         }

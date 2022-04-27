@@ -1,14 +1,13 @@
-﻿using PriceTrackerMobile.Response;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace PriceTrackerMobile.Interfaces
 {
-    public interface IHttpService
+    public interface IHttpService<T> where T : IApiResponse, new()
     {
         void Init(string baseUrl);
-        Task<T> PostRequestAsync<T>(IRequest request, string path) where T : ApiResponse, new();
-        Task<T> GetRequestAsync<T>(string path) where T : ApiResponse, new();
-        Task<T> DeleteRequestAsync<T>(string path) where T : ApiResponse, new();
         void ApplayToken();
+        Task<T2> PostRequestAsync<T2>(IRequest request, string path) where T2 : T, new();
+        Task<T2> GetRequestAsync<T2>(string path) where T2 : T, new();
+        Task<T2> DeleteRequestAsync<T2>(string path) where T2 : T, new();
     }
 }

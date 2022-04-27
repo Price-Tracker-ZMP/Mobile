@@ -1,6 +1,8 @@
-﻿namespace PriceTrackerMobile.Response
+﻿using PriceTrackerMobile.Interfaces;
+
+namespace PriceTrackerMobile.Response
 {
-    public class ApiResponse
+    public class ApiResponse : IApiResponse
     {
         public bool status;
         public string message;
