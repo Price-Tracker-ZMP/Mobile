@@ -38,5 +38,9 @@ namespace PriceTrackerMobile.Models
                 ImageUrl = value;
             }
         }
+        public bool isDiscount
+        {
+            get => DiscountPercent > 0 ? true : false;
+        }
     }
 }
