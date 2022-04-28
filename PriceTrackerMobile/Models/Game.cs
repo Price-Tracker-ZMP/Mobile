@@ -40,7 +40,7 @@ namespace PriceTrackerMobile.Models
         }
         public bool isDiscount
         {
-            get => DiscountPercent > 0 ? true : false;
+            get => DiscountPercent > 0;
         }
     }
 }
