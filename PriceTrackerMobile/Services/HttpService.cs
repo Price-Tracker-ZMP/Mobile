@@ -80,6 +80,8 @@ namespace PriceTrackerMobile.Services
 
         void IHttpService<T>.ApplayToken()
         {
+            if (client.DefaultRequestHeaders.Contains("authentication"))
+                client.DefaultRequestHeaders.Remove("authentication");
             client.DefaultRequestHeaders.Add("authentication", Settings.Token);
         }
     }
